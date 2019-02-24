@@ -40,7 +40,7 @@ class MenuComponent extends Component {
         )
     }
     renderSubwayMenu(restaurantData) {
-        const openingHours = "EMT"
+        const openingHours = restaurantData.openingHours
 
 
         return (

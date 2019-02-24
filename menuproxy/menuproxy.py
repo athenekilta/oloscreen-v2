@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, make_response
 from datetime import datetime
 import requests
+import subway
 
 app = Flask(__name__)
 
 amica_url = "https://www.fazerfoodco.fi/modules/json/json/Index?costNumber=0199&language=fi"
 sodexo_url = 'https://kitchen.kanttiinit.fi/restaurants/2/menu?day={}/'
+
 
 def get_json(url):
     return requests.get(url).json()
@@ -24,6 +26,7 @@ def restaurants():
     data['amica'] = get_json(amica_url + amica_timestamp)
     data['subway'] = data['sodexo']['menus'][0]['courses'].pop(-1)
     data['subway']['title'] = data['subway']['title'].replace("Subway: ","")
+    data['subway']['openingHours'] = subway.get_opening_hours()[datetime.now().weekday()]
 
     resp = make_response(jsonify(data))
     resp.headers['Access-Control-Allow-Origin'] = '*'
