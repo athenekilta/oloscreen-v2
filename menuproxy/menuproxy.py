@@ -2,6 +2,7 @@ from flask import Flask, jsonify, make_response
 from datetime import datetime, timedelta
 import requests
 import subway
+import os
 
 app = Flask(__name__)
 
@@ -43,3 +44,7 @@ def restaurants():
     resp.headers['Access-Control-Allow-Origin'] = '*'
 
     return resp
+
+@app.route('/sponsor-logos/')
+def sponsors():
+    return jsonify(os.listdir('../src/assets/sponsor-logos/'))
