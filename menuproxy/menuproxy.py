@@ -4,6 +4,11 @@ import requests
 
 app = Flask(__name__)
 
+amica_url = "https://www.fazerfoodco.fi/modules/json/json/Index?costNumber=0199&language=fi"
+sodexo_url = 'https://kitchen.kanttiinit.fi/restaurants/2/menu?day={}/'
+
+def get_json(url):
+    return requests.get(url).json()
 
 @app.route('/restaurants/')
 def restaurants():
@@ -11,7 +16,12 @@ def restaurants():
     # Use monday 25.2.19 for testing purposes
     if timestamp == '2019/02/24':
         timestamp = "2019/02/25"
-    sodexo_url = f'https://kitchen.kanttiinit.fi/restaurants/2/menu?day={timestamp}/'
-    resp = make_response(jsonify({'sodexo': requests.get(sodexo_url).json()}))
+
+    data = {}
+    data['sodexo'] = get_json(sodexo_url.format(timestamp))
+    data['amica'] = get_json(amica_url)
+
+    resp = make_response(jsonify(data))
     resp.headers['Access-Control-Allow-Origin'] = '*'
+
     return resp
