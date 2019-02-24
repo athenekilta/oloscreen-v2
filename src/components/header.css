@@ -1,0 +1,7 @@
+header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  background-color: #282c34;
+  color: white;
+}
