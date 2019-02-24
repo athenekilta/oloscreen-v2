@@ -27,14 +27,15 @@ def restaurants():
     data['sodexo'] = get_json(sodexo_url.format(timestamp))
     data['amica'] = get_json(amica_url + amica_timestamp)
     if len(data['sodexo']['menus']):  # If there are menus on sodexo
-        data['subway'] = data['sodexo']['menus'][0]['courses'].pop(-1)  # Last sodexo course is the daily sub on Subway
+        # Last sodexo course is the daily sub on Subway
+        data['subway'] = data['sodexo']['menus'][0]['courses'].pop(-1)
     else:
         if weekday == 5:  # Hardcoded daily sub for Saturdays
             title = "Kinkku"
         else:
             title = ""  # Return empty title when closed
         data['subway'] = {'title': title, "properties": []}
-    data['subway']['title'] = data['subway']['title'].replace("Subway: ","")
+    data['subway']['title'] = data['subway']['title'].replace("Subway: ", "")
     data['subway']['openingHours'] = subway.get_opening_hours()[weekday]
 
     resp = make_response(jsonify(data))
