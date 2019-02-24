@@ -4,23 +4,34 @@ import "moment/locale/fi";
 import "../App.css";
 import "./header.css";
 
-moment.locale("fi");
-
 class HeaderComponent extends Component {
   constructor(props) {
     super(props);
     moment.locale("fi");
+    this.state = {
+      time: moment()
+    };
   }
+  componentDidMount() {
+    setInterval(this.updateTime, 1000);
+  }
+  updateTime = () => {
+    this.setState({ time: moment() });
+  };
   render() {
-    console.log(moment.locale("fi"));
     return (
       <div>
         <header className="App-header">
-          <p id="time-date"> {moment().format("LL")} </p>
-          <p id="time-clock"> {moment().format("LTS")} </p>
-          <div id="logo-carousel">
-            <p>Logot</p>
+          <div id="time-date">
+            <p> {this.state.time.format("LL")} </p>
+            <p>
+              {this.state.time.format("dddd") +
+                ", viikko " +
+                this.state.time.get("week")}
+            </p>
           </div>
+          <p id="time-clock"> {this.state.time.format("LTS")} </p>
+          <p id="logo-carousel">Logot</p>
         </header>
       </div>
     );
