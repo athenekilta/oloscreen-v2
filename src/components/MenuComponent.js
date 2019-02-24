@@ -118,7 +118,7 @@ class MenuComponent extends Component {
         console.log(restaurantData)
         return (
             <div className="food-menu" >
-                <h1 id="menu-title">RUOKALISTAT</h1>
+                <h1 id="menu-title">NÄLKÄ?</h1>
                 {this.renderSodexoMenu(restaurantData.sodexo)}
                 {this.renderAmicaMenu(restaurantData.amica)}
                 {this.renderSubwayMenu(restaurantData.subway)}

@@ -64,16 +64,12 @@ body{
 }
 
 #menu-title{
-  margin-left: 35%;
-  font-size: 1.8rem;
+  margin-left: 33%;
+  font-size: 2rem;
   margin-bottom: 0.5rem;
   letter-spacing: 0.2rem;
 
 }
 h1{
   color: #8BC34A;
-}
-#menu-title::first-letter{
-  font-size: 130%;
-
 }
