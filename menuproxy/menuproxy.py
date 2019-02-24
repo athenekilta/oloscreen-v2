@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, make_response
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import subway
 
@@ -14,19 +14,20 @@ def get_json(url):
 
 @app.route('/restaurants/')
 def restaurants():
-    timestamp = datetime.now().strftime("%Y/%m/%d")
-    weekday = datetime.now().weekday()
-    amica_timestamp = "&date="
-    # Use monday 25.2.19 for testing purposes
+    today = datetime.now()
+    timestamp = today.strftime("%Y/%m/%d")
+    # On 24.2.19, use monday as the date 25.2.19 for testing purposes
     if timestamp == '2019/02/24':
-        timestamp = "2019/02/25"
-        amica_timestamp += '2019-02-25'
+        today = datetime.now() + timedelta(days=1)
+        timestamp = today.strftime("%Y/%m/%d")
+    weekday = today.weekday()
+    amica_timestamp = "&date=" + today.strftime("%Y-%m-%d")
 
     data = {}
     data['sodexo'] = get_json(sodexo_url.format(timestamp))
     data['amica'] = get_json(amica_url + amica_timestamp)
     if len(data['sodexo']['menus']):  # If there are menus on sodexo
-        data['subway'] = data['sodexo']['menus'][0]['courses'].pop(-1)
+        data['subway'] = data['sodexo']['menus'][0]['courses'].pop(-1)  # Last sodexo course is the daily sub on Subway
     else:
         if weekday == 5:  # Hardcoded daily sub for Saturdays
             title = "Kinkku"
@@ -37,6 +38,7 @@ def restaurants():
     data['subway']['openingHours'] = subway.get_opening_hours()[weekday]
 
     resp = make_response(jsonify(data))
+    # Allow CORS
     resp.headers['Access-Control-Allow-Origin'] = '*'
 
     return resp
