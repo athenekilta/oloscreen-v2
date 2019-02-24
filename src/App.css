@@ -1,33 +1,75 @@
 .App {
   text-align: center;
+  
+}
+body{
+   background-color: #171717;
+   color: white;
+   height: 100vh;
+   overflow: hidden;
+   font-family: 'Open Sans'
+}
+.courses{
+  max-width: 50%;
+  margin-left: 30px;
+  text-align: left;
+  position: relative;
+}
+.courses:before {
+  content: '';
+  height: calc(100% - 24px); 
+  width: 1px;
+  
+  position: absolute;
+  left: -10px;
+  top: 14px;
+
+  background-color: #8BC34A;
+}
+#subway-courses{
+ padding-top: 16px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+#subway-courses:before{
+ 
+   content: '';
+  height: calc(100% - 10px); 
+  width: 1px;
+
+  position: absolute;
+  left: -10px;
+  top: 14px;
+
+  background-color: #8BC34A;
+}
+.food-menu{
+  font-size: 1.35rem;
+  text-align:left;
+  margin-left: 0rem;
+  margin-top: 2%;
+  width: 60vw;
+  height: 70vh;
 }
 
-.App-header {
-  background-color: #282c34;
-  height: 10%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.restaurant{
+  margin-bottom: 0.3rem;
+  margin-top: 0.8rem;
+  text-transform: uppercase;
+  color: #8BC34A;
+}
+.restaurant-title{
+   text-align: right;
+   width: 30%;
+
 }
 
-.App-link {
-  color: #61dafb;
-}
+#menu-title{
+  margin-left: 33%;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.2rem;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+}
+h1{
+  color: #8BC34A;
 }
