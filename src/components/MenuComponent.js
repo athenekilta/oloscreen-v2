@@ -27,30 +27,42 @@ class MenuComponent extends Component {
     renderSodexoMenu(restaurantData) {
         const openingHours = restaurantData.openingHours[moment().weekday() - 2] || "Suljettu tänään"
         const courses = restaurantData.menus[0].courses.map(course => {
-            return <p>{course.title}</p>
+            return <p key={course.title}>{course.title}</p>
         })
 
         return (
             <div>
-                <h2> T-Talo ({openingHours})</h2>
-                {courses}
-            </div>
+                <div style={{ display: "flex" }}>
+                    <div className="restaurant-title">
+                        <h2 className="restaurant" > T-talo</h2>
+                        <i>{openingHours}</i></div>
+
+
+                    <div className="courses"> {courses}</div>
+                </div>
+            </div >
 
 
         )
     }
     renderSubwayMenu(restaurantData) {
+
         const openingHours = restaurantData.openingHours
-
-
         return (
             <div>
-                <h2> Subway ({openingHours})</h2>
-                {restaurantData.title}
+                <div style={{ display: "flex" }}>
+                    <div className="restaurant-title">
+                        <h2 className="restaurant" > Subway</h2>
+                        <i>{openingHours}</i></div>
+                    <div className="courses" id="subway-courses">{restaurantData.title} </div>
+                </div>
             </div>
 
 
         )
+    }
+    formatCourseName(name) {
+        return name.replace(/\* ,/g, "")
     }
     renderAmicaMenu(restaurantData) {
         console.log(restaurantData)
@@ -59,26 +71,45 @@ class MenuComponent extends Component {
             const courseName = course.Name.toLowerCase()
             if (courseName.includes("lounas")) {
                 return (
-                    <div>
-                        <p>{course.Components.join(", ")}</p>
+                    <div key={course.Components.join(", ")}>
+                        <p>
+                            {course.Components.map(component => {
+                                return <span>{this.formatCourseName(component)}<br /></span>
+                            })}
+                        </p>
                     </div>
                 )
             }
             else if (courseName.includes("bufee")) {
                 return (
-                    <div>
-                        <h3>Salaattibuffa</h3>
-                        <p>{course.Components.join(", ")}</p>
+                    <div key={course.Components.join(", ")}>
+                        <b >Salaatti</b>
+                        <p style={{ marginTop: "6px" }}>
+                            {course.Components.map(component => {
+                                return <span>{this.formatCourseName(component)}<br /></span>
+                            })}
+                        </p>
                     </div >
                 )
             }
 
         })
+        const openingHoursParsed = openingHours.split(", ") // split by ','
         return (
             <div>
-                <h2> TUAS ({openingHours})</h2>
-                {courses}
-            </div>
+                <div style={{ display: "flex" }}>
+                    <div className="restaurant-title">
+                        <h2 className="restaurant" > TUAS</h2>
+                        <i>
+                            <p style={{ margin: 0 }}>{openingHoursParsed[0]}</p>
+                            <p style={{ marginTop: 0 }}>{openingHoursParsed[1]}</p>
+                        </i>
+                    </div>
+
+
+                    <div className="courses"> {courses}</div>
+                </div>
+            </div >
         )
     }
     render() {
@@ -87,6 +118,7 @@ class MenuComponent extends Component {
         console.log(restaurantData)
         return (
             <div className="food-menu" >
+                <h2 id="menu-title">RUOKALISTAT</h2>
                 {this.renderSodexoMenu(restaurantData.sodexo)}
                 {this.renderAmicaMenu(restaurantData.amica)}
                 {this.renderSubwayMenu(restaurantData.subway)}

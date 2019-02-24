@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  
+}
+body{
+   background-color: #282c34;
+   color: white;
 }
 
 .App-logo {
@@ -22,10 +27,63 @@
 .App-link {
   color: #61dafb;
 }
+.courses{
+  max-width: 50%;
+  margin-left: 30px;
+  text-align: left;
+  position: relative;
+}
+.courses:before {
+  content: '';
+  height: calc(100% - 24px); 
+  width: 1px;
+
+  position: absolute;
+  left: -10px;
+  top: 14px;
+
+  background-color: white;
+}
+#subway-courses{
+ padding-top: 16px;
+}
+#subway-courses:before{
+ 
+   content: '';
+  height: calc(100% - 10px); 
+  width: 1px;
+
+  position: absolute;
+  left: -10px;
+  top: 14px;
+
+  background-color: white;
+}
 .food-menu{
-  border: 2px solid black;
+  text-align:left;
+  margin-left: 1rem;
   width: 50vw;
   height: 70vh;
+}
+
+.restaurant{
+  margin-bottom: 0.3rem;
+  margin-top: 0.8rem;
+  text-transform: uppercase;
+}
+.restaurant-title{
+   text-align: right;
+   width: 30%;
+
+}
+
+#menu-title{
+  margin-left: 35%;
+  margin-bottom: 0.5rem;
+}
+#menu-title::first-letter{
+  font-size: 130%;
+
 }
 @keyframes App-logo-spin {
   from {
