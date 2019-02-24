@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import HeaderComponent from './components/Header.js';
 import MenuComponent from './components/MenuComponent.js';
+import Countdown from './components/Countdown';
 
 class App extends Component {
   render() {

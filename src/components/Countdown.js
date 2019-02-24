@@ -39,6 +39,7 @@ class Countdown extends Component {
   componentDidMount = () => {
     this.getEvents();
 
+    this.counter();
     this.interval = setInterval(() => {
       this.counter();
       // setting the state re-renders the page
@@ -91,8 +92,7 @@ class Countdown extends Component {
     console.log(events[0] ? moment(events[0].start.dateTime).valueOf() : '');
     return (
       <div>
-        <p>Countdown</p>
-        <p>{events[0] ? events[0].summary : ''}</p>
+        <h2>{events[0] ? events[0].summary : ''}</h2>
         <p>{events[0] ? events[0].start.dateTime : ''}</p>
         {events[0]
           ? this.counter(moment(events[0].start.dateTime).valueOf())
