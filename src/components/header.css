@@ -22,3 +22,7 @@ header * {
 #time-clock {
   font-size: 5em;
 }
+
+#sponsor-logos * {
+  width: 20vw;
+}
