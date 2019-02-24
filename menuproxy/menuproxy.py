@@ -20,6 +20,8 @@ def restaurants():
     data = {}
     data['sodexo'] = get_json(sodexo_url.format(timestamp))
     data['amica'] = get_json(amica_url)
+    data['subway'] = data['sodexo']['menus'][0]['courses'].pop(-1)
+    data['subway']['title'] = data['subway']['title'].replace("Subway: ","")
 
     resp = make_response(jsonify(data))
     resp.headers['Access-Control-Allow-Origin'] = '*'
