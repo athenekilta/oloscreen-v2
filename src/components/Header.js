@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
+import SponsorComponent from "./SponsorComponent.js";
 import "moment/locale/fi";
 import "../App.css";
 import "./header.css";
@@ -9,7 +10,8 @@ class HeaderComponent extends Component {
     super(props);
     moment.locale("fi");
     this.state = {
-      time: moment()
+      time: moment(),
+      sponsorLogos: null
     };
   }
   componentDidMount() {
@@ -31,7 +33,7 @@ class HeaderComponent extends Component {
             </p>
           </div>
           <p id="time-clock"> {this.state.time.format("LTS")} </p>
-          <p id="logo-carousel">Logot</p>
+          <SponsorComponent />
         </header>
       </div>
     );

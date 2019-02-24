@@ -2,12 +2,17 @@ from flask import Flask, jsonify, make_response
 from datetime import datetime, timedelta
 import requests
 import subway
+import os
 
 app = Flask(__name__)
 
 amica_url = "https://www.fazerfoodco.fi/modules/json/json/Index?costNumber=0199&language=fi"
 sodexo_url = 'https://kitchen.kanttiinit.fi/restaurants/2/menu?day={}/'
 
+@app.after_request
+def allow_cors(response):
+    response.headers['Access-Control-Allow-Origin'] = "*"
+    return response
 
 def get_json(url):
     return requests.get(url).json()
@@ -38,8 +43,8 @@ def restaurants():
     data['subway']['title'] = data['subway']['title'].replace("Subway: ", "")
     data['subway']['openingHours'] = subway.get_opening_hours()[weekday]
 
-    resp = make_response(jsonify(data))
-    # Allow CORS
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    return jsonify(data)
 
-    return resp
+@app.route('/sponsor-logos/')
+def sponsors():
+    return jsonify(os.listdir('../src/assets/sponsor-logos/'))
