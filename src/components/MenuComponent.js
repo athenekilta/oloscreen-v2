@@ -62,7 +62,7 @@ class MenuComponent extends Component {
         )
     }
     formatCourseName(name) {
-        return name.replace(/\* ,/g, "")
+        return name.split(" (")[0]
     }
     renderAmicaMenu(restaurantData) {
         console.log(restaurantData)
@@ -118,7 +118,7 @@ class MenuComponent extends Component {
         console.log(restaurantData)
         return (
             <div className="food-menu" >
-                <h2 id="menu-title">RUOKALISTAT</h2>
+                <h1 id="menu-title">RUOKALISTAT</h1>
                 {this.renderSodexoMenu(restaurantData.sodexo)}
                 {this.renderAmicaMenu(restaurantData.amica)}
                 {this.renderSubwayMenu(restaurantData.subway)}

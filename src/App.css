@@ -19,16 +19,17 @@ body{
   content: '';
   height: calc(100% - 24px); 
   width: 1px;
-
+  
   position: absolute;
   left: -10px;
   top: 14px;
 
-  background-color: white;
+  background-color: #8BC34A;
 }
 #subway-courses{
  padding-top: 16px;
 }
+
 #subway-courses:before{
  
    content: '';
@@ -39,12 +40,14 @@ body{
   left: -10px;
   top: 14px;
 
-  background-color: white;
+  background-color: #8BC34A;
 }
 .food-menu{
+  font-size: 1.35rem;
   text-align:left;
-  margin-left: 1rem;
-  width: 50vw;
+  margin-left: 0rem;
+  margin-top: 2%;
+  width: 60vw;
   height: 70vh;
 }
 
@@ -52,6 +55,7 @@ body{
   margin-bottom: 0.3rem;
   margin-top: 0.8rem;
   text-transform: uppercase;
+  color: #8BC34A;
 }
 .restaurant-title{
    text-align: right;
@@ -63,6 +67,11 @@ body{
   margin-left: 35%;
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
+  letter-spacing: 0.2rem;
+
+}
+h1{
+  color: #8BC34A;
 }
 #menu-title::first-letter{
   font-size: 130%;
