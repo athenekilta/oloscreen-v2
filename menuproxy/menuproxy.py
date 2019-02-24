@@ -13,13 +13,15 @@ def get_json(url):
 @app.route('/restaurants/')
 def restaurants():
     timestamp = datetime.now().strftime("%Y/%m/%d")
+    amica_timestamp = "&date="
     # Use monday 25.2.19 for testing purposes
     if timestamp == '2019/02/24':
         timestamp = "2019/02/25"
+        amica_timestamp += '2019-02-25'
 
     data = {}
     data['sodexo'] = get_json(sodexo_url.format(timestamp))
-    data['amica'] = get_json(amica_url)
+    data['amica'] = get_json(amica_url + amica_timestamp)
     data['subway'] = data['sodexo']['menus'][0]['courses'].pop(-1)
     data['subway']['title'] = data['subway']['title'].replace("Subway: ","")
 
