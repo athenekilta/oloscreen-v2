@@ -18,7 +18,7 @@ class SponsorComponent extends Component {
         currentLogo: response.data[0]
       });
     });
-    setInterval(this.updateSponsor, 3000);
+    setInterval(this.updateSponsor, 20000);
   }
   updateSponsor = () => {
     this.setState({
