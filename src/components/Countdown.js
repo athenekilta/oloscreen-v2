@@ -33,7 +33,22 @@ class Countdown extends Component {
     );
     const seconds = pad(Math.floor((distance % (1000 * 60)) / 1000));
 
-    return <p>{days + ' ' + hours + ' ' + minutes + ' ' + seconds}</p>;
+    return (
+      <div className="countNumbers">
+        <div className="countbox">
+          <span>{days}</span> days
+        </div>
+        <div className="countbox">
+          <span>{hours}</span> hours
+        </div>
+        <div className="countbox">
+          <span>{minutes}</span> minutes
+        </div>
+        <div className="countbox">
+          <span>{seconds}</span> seconds
+        </div>
+      </div>
+    );
   }
 
   componentDidMount = () => {
@@ -58,26 +73,16 @@ class Countdown extends Component {
           return window.gapi.client.request({
             path: `https://www.googleapis.com/calendar/v3/calendars/${
               process.env.REACT_APP_GOOGLE_CAL_ID
-            }/events`
+            }/events?singleEvents=true&orderBy=startTime&timeMin=${moment().toISOString()}`
           });
         })
         .then(
           response => {
             // Google cal sorts events by edit time, sorting here by event time
-            let events = response.result.items.sort((a, b) => {
-              return (
-                moment(a.start.dateTime).valueOf() -
-                moment(b.start.dateTime).valueOf()
-              );
+            let events = response.result.items;
+            that.setState({
+              events
             });
-            that.setState(
-              {
-                events
-              },
-              () => {
-                console.log(that.state.events);
-              }
-            );
           },
           function(reason) {
             console.log(reason);
@@ -89,11 +94,9 @@ class Countdown extends Component {
 
   render() {
     const { events } = this.state;
-    console.log(events[0] ? moment(events[0].start.dateTime).valueOf() : '');
     return (
-      <div>
-        <h2>{events[0] ? events[0].summary : ''}</h2>
-        <p>{events[0] ? events[0].start.dateTime : ''}</p>
+      <div className="countdown">
+        <h1>{events[0] ? events[0].summary : ''}</h1>
         {events[0]
           ? this.counter(moment(events[0].start.dateTime).valueOf())
           : ''}
