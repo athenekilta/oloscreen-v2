@@ -36,16 +36,16 @@ class Countdown extends Component {
     return (
       <div className="countNumbers">
         <div className="countbox">
-          <span>{days}</span> days
+          <span>{days}</span> {days === '01' ? 'päivä ' : 'päivää'}
         </div>
         <div className="countbox">
-          <span>{hours}</span> hours
+          <span>{hours}</span> {hours === '01' ? 'tunti ' : 'tuntia'}
         </div>
         <div className="countbox">
-          <span>{minutes}</span> minutes
+          <span>{minutes}</span> {minutes === '01' ? 'minuutti ' : 'minuuttia'}
         </div>
         <div className="countbox">
-          <span>{seconds}</span> seconds
+          <span>{seconds}</span> {seconds === '01' ? 'sekunti ' : 'sekuntia'}
         </div>
       </div>
     );
