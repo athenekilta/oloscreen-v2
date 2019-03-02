@@ -74,6 +74,12 @@ h1 {
   width: 500px;
 }
 
+.countdown h1 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
 .countNumbers {
   display: flex;
   justify-content: center;
