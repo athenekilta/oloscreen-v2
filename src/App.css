@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  width: 100%;
 }
 body {
   background-color: #171717;
@@ -47,6 +48,7 @@ body {
   margin-top: 2%;
   width: 60vw;
   height: 70vh;
+  float: left;
 }
 
 .restaurant {
@@ -70,14 +72,31 @@ h1 {
   color: #8bc34a;
 }
 
-.countdown {
-  width: 500px;
+.eventContainer {
+  margin-top: 2%;
 }
 
-.countdown h1 {
+.eventTime {
+  margin-bottom: 0;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.eventTitle {
+  margin-top: 0;
+}
+
+.countdown,
+.events {
+  width: 500px;
+  float: left;
+}
+
+.countdown > h1,
+.events > h1 {
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.2rem;
 }
 
 .countNumbers {
@@ -85,7 +104,7 @@ h1 {
   justify-content: center;
   flex-wrap: nowrap;
   border: 2px #8bc34a solid;
-  margin: 0 40px;
+  margin: 0 40px 40px;
   padding: 5px 15px 15px;
 }
 
