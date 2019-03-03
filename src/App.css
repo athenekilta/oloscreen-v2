@@ -104,14 +104,15 @@ h1 {
   justify-content: center;
   flex-wrap: nowrap;
   border: 2px #8bc34a solid;
-  margin: 0 40px 40px;
-  padding: 5px 15px 15px;
+  margin: 0 20px 40px;
+  padding: 5px 0 15px;
 }
 
 .countbox {
   float: left;
   padding: 5px 10px;
-  margin: 0 10px;
+  margin: 0 5px;
+  width: 75px;
 }
 
 .countbox span {
