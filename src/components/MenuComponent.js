@@ -16,7 +16,7 @@ class MenuComponent extends Component {
     const apiURL = `http://localhost:3001/restaurants/`;
     console.log(apiURL);
     let self = this;
-    axios.get(apiURL).then(function(response) {
+    axios.get(apiURL).then(function (response) {
       self.setState({ restaurantData: response.data });
     });
   }
@@ -61,7 +61,11 @@ class MenuComponent extends Component {
   }
   renderAmicaMenu(restaurantData) {
     console.log(restaurantData);
+    if (restaurantData.MenusForDays.length === 0) {
+      return null
+    }
     const openingHours = restaurantData.MenusForDays[0].LunchTime;
+    // eslint-disable-next-line
     const courses = restaurantData.MenusForDays[0].SetMenus.map(course => {
       const courseName = course.Name.toLowerCase();
       if (courseName.includes("lounas")) {

@@ -104,7 +104,7 @@ h1 {
   justify-content: center;
   flex-wrap: nowrap;
   border: 2px #8bc34a solid;
-  margin: 0 20px 40px;
+  margin: 0 20px 0px;
   padding: 5px 0 15px;
 }
 
@@ -119,4 +119,24 @@ h1 {
   font-size: 3em;
   margin-bottom: 0;
   font-weight: bold;
+}
+
+#shouts{
+  float: left;
+  width: 500px;
+}
+
+#shouts > h1{
+  margin: 0px;
+  margin-top: 20px;
+  color: #8bc34a;
+  letter-spacing: 0.2rem;
+ 
+}
+#shouts > h4 {
+   margin: 0;
+     margin-bottom: 1rem;
+}
+#shouts > div{
+   font-size: 1.2rem;
 }

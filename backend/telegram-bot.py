@@ -18,13 +18,15 @@ while True:
             if update.message is None:
                 continue
             chat_id = update.message.chat_id
-
             if update.message:
-                if update.message.text.lower() in help_commands:
-                    update.message.reply_text(help_text)
+                if update.message.text:
+                    if update.message.text.lower() in help_commands:
+                        update.message.reply_text(help_text)
+                    else:
+                        update.message.reply_text("✅ checkistä!")
+                        files.write_to_queue(update.message.text)
                 else:
-                    update.message.reply_text("✅ checkistä!")
-                    files.write_to_queue(update.message.text)
+                    update.message.reply_text("Nyt pistit liian pahan :( ")
 
     except Unauthorized:
         # The user has removed or blocked the bot.

@@ -12,7 +12,7 @@ class SponsorComponent extends Component {
   componentDidMount() {
     const apiURL = `http://localhost:3001/sponsor-logos/`;
     let self = this;
-    axios.get(apiURL).then(function(response) {
+    axios.get(apiURL).then(function (response) {
       self.setState({
         sponsorLogos: response.data,
         currentLogo: response.data[0]
@@ -24,7 +24,7 @@ class SponsorComponent extends Component {
     this.setState({
       currentLogo: this.state.sponsorLogos[
         (this.state.sponsorLogos.indexOf(this.state.currentLogo) + 1) %
-          this.state.sponsorLogos.length
+        this.state.sponsorLogos.length
       ]
     });
   };
@@ -33,6 +33,7 @@ class SponsorComponent extends Component {
       <div id="sponsor-logos">
         {this.state.sponsorLogos ? (
           <img
+            alt="sponsorLogo"
             src={require("../assets/sponsor-logos/" + this.state.currentLogo)}
           />
         ) : null}
