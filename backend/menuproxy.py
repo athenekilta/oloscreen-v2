@@ -45,6 +45,16 @@ def restaurants():
 
     return jsonify(data)
 
+
 @app.route('/sponsor-logos/')
 def sponsors():
     return jsonify(os.listdir('../src/assets/sponsor-logos/'))
+
+
+@app.route('/shoutbox/')
+def shoutbox():
+    message_list = []
+    dir = os.path.join(os.getcwd(), "backend/" "telegram-messages.txt")
+    with open(dir) as messages:
+         # the last row is always empty
+        return jsonify(messages.read().split("\n")[:-1])
