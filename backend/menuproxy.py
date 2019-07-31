@@ -22,7 +22,7 @@ def restaurants():
     today = datetime.now()
     timestamp = today.strftime("%Y/%m/%d")
     # On 24.2.19, use monday as the date 25.2.19 for testing purposes
-    if timestamp == '2019/02/24':
+    if timestamp == '2019/03/03':
         today = datetime.now() + timedelta(days=1)
         timestamp = today.strftime("%Y/%m/%d")
     weekday = today.weekday()

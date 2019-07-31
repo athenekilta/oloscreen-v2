@@ -1,15 +1,15 @@
 .App {
   text-align: center;
-  
+  width: 100%;
 }
-body{
-   background-color: #171717;
-   color: white;
-   height: 100vh;
-   overflow: hidden;
-   font-family: 'Open Sans'
+body {
+  background-color: #171717;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Open Sans';
 }
-.courses{
+.courses {
   max-width: 50%;
   margin-left: 30px;
   text-align: left;
@@ -17,59 +17,106 @@ body{
 }
 .courses:before {
   content: '';
-  height: calc(100% - 24px); 
-  width: 1px;
-  
-  position: absolute;
-  left: -10px;
-  top: 14px;
-
-  background-color: #8BC34A;
-}
-#subway-courses{
- padding-top: 16px;
-}
-
-#subway-courses:before{
- 
-   content: '';
-  height: calc(100% - 10px); 
+  height: calc(100% - 24px);
   width: 1px;
 
   position: absolute;
   left: -10px;
   top: 14px;
 
-  background-color: #8BC34A;
+  background-color: #8bc34a;
 }
-.food-menu{
+#subway-courses {
+  padding-top: 16px;
+}
+
+#subway-courses:before {
+  content: '';
+  height: calc(100% - 10px);
+  width: 1px;
+
+  position: absolute;
+  left: -10px;
+  top: 14px;
+
+  background-color: #8bc34a;
+}
+.food-menu {
   font-size: 1.35rem;
-  text-align:left;
+  text-align: left;
   margin-left: 0rem;
   margin-top: 2%;
   width: 60vw;
   height: 70vh;
+  float: left;
 }
 
-.restaurant{
+.restaurant {
   margin-bottom: 0.3rem;
   margin-top: 0.8rem;
   text-transform: uppercase;
-  color: #8BC34A;
+  color: #8bc34a;
 }
-.restaurant-title{
-   text-align: right;
-   width: 30%;
-
+.restaurant-title {
+  text-align: right;
+  width: 30%;
 }
 
-#menu-title{
+#menu-title {
   margin-left: 33%;
   font-size: 2rem;
   margin-bottom: 0.5rem;
   letter-spacing: 0.2rem;
-
 }
-h1{
-  color: #8BC34A;
+h1 {
+  color: #8bc34a;
+}
+
+.eventContainer {
+  margin-top: 2%;
+}
+
+.eventTime {
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+.eventTitle {
+  margin-top: 0;
+}
+
+.countdown,
+.events {
+  width: 500px;
+  float: left;
+}
+
+.countdown > h1,
+.events > h1 {
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.2rem;
+}
+
+.countNumbers {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  border: 2px #8bc34a solid;
+  margin: 0 20px 40px;
+  padding: 5px 0 15px;
+}
+
+.countbox {
+  float: left;
+  padding: 5px 10px;
+  margin: 0 5px;
+  width: 75px;
+}
+
+.countbox span {
+  font-size: 3em;
+  margin-bottom: 0;
+  font-weight: bold;
 }

@@ -70,7 +70,7 @@ class MenuComponent extends Component {
             <p>
               {course.Components.map(component => {
                 return (
-                  <span>
+                  <span key={component}>
                     {this.formatCourseName(component)}
                     <br />
                   </span>
@@ -86,7 +86,7 @@ class MenuComponent extends Component {
             <p style={{ marginTop: "6px" }}>
               {course.Components.map(component => {
                 return (
-                  <span>
+                  <span key={component}>
                     {this.formatCourseName(component)}
                     <br />
                   </span>
