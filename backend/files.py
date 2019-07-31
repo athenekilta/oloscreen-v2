@@ -1,4 +1,8 @@
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 def write_to_queue(message):
     message = message.replace("\n", " ").strip() + "\n"
@@ -18,10 +22,10 @@ def write_to_queue(message):
             pass
         write_to_queue(message)
 
+
 def read_token():
     try:
-        with open(str(Path.home()) + "/.oloscreen-telegram-token.txt", "r") as tokenfile:
-            return tokenfile.read().strip()
-    except Exception as e:
-        print("Couldn't read Telegram bot token from ~/.oloscreen-telegram-token.txt (where ~ is current users home directory)")
-        raise e
+        return os.environ['OLOSCREEN_TELEGRAM_TOKEN']
+    except KeyError:
+        raise Exception(
+            "Couldn't read Telegram bot token from env OLOSCREEN_TELEGRAM_TOKEN")
