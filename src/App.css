@@ -62,6 +62,14 @@ body {
   width: 30%;
 }
 
+.foodCodes {
+  font-weight: 800;
+  font-size: 0.8rem;
+  margin-left: 5px;
+  color: #8bc34a;
+  vertical-align: middle;
+}
+
 #menu-title {
   margin-left: 33%;
   font-size: 2rem;
@@ -121,22 +129,21 @@ h1 {
   font-weight: bold;
 }
 
-#shouts{
+#shouts {
   float: left;
   width: 500px;
 }
 
-#shouts > h1{
+#shouts > h1 {
   margin: 0px;
   margin-top: 20px;
   color: #8bc34a;
   letter-spacing: 0.2rem;
- 
 }
 #shouts > h4 {
-   margin: 0;
-     margin-bottom: 1rem;
+  margin: 0;
+  margin-bottom: 1rem;
 }
-#shouts > div{
-   font-size: 1.2rem;
+#shouts > div {
+  font-size: 1.2rem;
 }
