@@ -1,68 +1,63 @@
 import React, { Component } from 'react';
 import '../App.css';
 import moment from 'moment';
+import Counter from './Counter';
 
 class Countdown extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: []
+      events: [],
+      fetching: false
     };
     this.counter = this.counter.bind(this);
   }
 
-  counter(eventDate) {
-    const countDownDate = moment(eventDate).valueOf();
-    const now = moment();
+  counter() {
+    const { events } = this.state;
+    const countDownDate = events[0]
+      ? moment(events[0].start.dateTime).valueOf()
+      : 0;
+    const now = moment().valueOf();
     const distance = countDownDate - now;
 
-    const pad = num => {
-      let s = `${num}`;
-      while (s.length < 2) {
-        s = `0${s}`;
-      }
-      return s;
-    };
-
-    const days = pad(Math.floor(distance / (1000 * 60 * 60 * 24)));
-    const hours = pad(
-      Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    );
-    const minutes = pad(
-      Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-    );
-    const seconds = pad(Math.floor((distance % (1000 * 60)) / 1000));
-
-    return (
-      <div className="countNumbers">
-        <div className="countbox">
-          <span>{days}</span> {days === '01' ? 'päivä ' : 'päivää'}
-        </div>
-        <div className="countbox">
-          <span>{hours}</span> {hours === '01' ? 'tunti ' : 'tuntia'}
-        </div>
-        <div className="countbox">
-          <span>{minutes}</span> {minutes === '01' ? 'minuutti ' : 'minuuttia'}
-        </div>
-        <div className="countbox">
-          <span>{seconds}</span> {seconds === '01' ? 'sekunti ' : 'sekuntia'}
-        </div>
-      </div>
-    );
+    this.setState({ distance: distance });
   }
 
   componentDidMount = () => {
     this.getEvents();
+  };
 
+  componentDidUpdate = (prevProps, prevState) => {
+    const { events, fetching, distance } = this.state;
+
+    if (!fetching && distance < 0) {
+      this.getEvents();
+    }
+
+    if (!events || !events[0]) {
+      return;
+    }
+    if (
+      prevState.events &&
+      prevState.events[0] &&
+      prevState.events[0].id === events[0].id
+    ) {
+      return;
+    }
+    if (this.interval) clearInterval(this.interval);
     this.counter();
     this.interval = setInterval(() => {
       this.counter();
-      // setting the state re-renders the page
-      this.setState({ done: true });
     }, 1000);
   };
 
+  componentWillUnmount = () => {
+    clearInterval(this.interval);
+  };
+
   getEvents() {
+    this.setState({ fetching: true });
     let that = this;
     function start() {
       window.gapi.client
@@ -81,25 +76,26 @@ class Countdown extends Component {
             // Google cal sorts events by edit time, sorting here by event time
             let events = response.result.items;
             that.setState({
-              events
+              events,
+              fetching: false
             });
           },
           function(reason) {
             console.log(reason);
+            this.setState({ fetching: false });
           }
-        );
+        )
+        .catch(error => console.log(error));
     }
     window.gapi.load('client', start);
   }
 
   render() {
-    const { events } = this.state;
+    const { events, distance } = this.state;
     return (
-      <div className="countdown">
+      <div className='countdown'>
         <h1>{events[0] ? events[0].summary : ''}</h1>
-        {events[0]
-          ? this.counter(moment(events[0].start.dateTime).valueOf())
-          : ''}
+        {distance ? <Counter distance={distance} /> : ''}
       </div>
     );
   }
