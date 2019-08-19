@@ -44,18 +44,17 @@ class Events extends Component {
 
   render() {
     const { events } = this.state;
-    console.log(events);
     return (
-      <div className="events">
+      <div className='events'>
         <h1>Tulevat tapahtumat</h1>
         {events
           ? events.map(i => {
               return (
-                <div key={i.summary}>
-                  <p className="eventTime">
+                <div key={i.id}>
+                  <p className='eventTime'>
                     {moment(i.start.dateTime).format('llll')}
                   </p>
-                  <h2 className="eventTitle">{i.summary}</h2>
+                  <h2 className='eventTitle'>{i.summary}</h2>
                 </div>
               );
             })
