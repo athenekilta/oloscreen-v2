@@ -7,7 +7,7 @@ Set it all up
 ```
 npm install
 cd backend
-./setup.py
+./setup.sh
 ```
 ## Usage
 Change directory back to project root of the project. Opening tmux or screen might help here.
