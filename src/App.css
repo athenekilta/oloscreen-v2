@@ -8,6 +8,7 @@ body {
   height: 100vh;
   overflow: hidden;
   font-family: 'Open Sans';
+  cursor: none;
 }
 .courses {
   max-width: 50%;
