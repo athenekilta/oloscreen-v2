@@ -32,8 +32,7 @@ def restaurants():
     data['sodexo'] = get_json(sodexo_url.format(timestamp))
     data['amica'] = get_json(amica_url + amica_timestamp)
     if len(data['sodexo']['menus']):  # If there are menus on sodexo
-        # Last sodexo course is the daily sub on Subway
-        data['subway'] = data['sodexo']['menus'][0]['courses'].pop(-1)
+        data['subway'] = list(filter(lambda x: x['title'].find('Subway:') > -1, data['sodexo']['menus'][0]['courses']))[0]
     else:
         if weekday == 5:  # Hardcoded daily sub for Saturdays
             title = "Kinkku"
