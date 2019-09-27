@@ -3,7 +3,7 @@ import '../App.css';
 import moment from 'moment';
 import 'moment/locale/fi';
 import axios from 'axios';
-
+const MS_INTERVAL = 1000 * 60 * 60 * 12
 moment.locale('fi');
 class MenuComponent extends Component {
   constructor(props) {
@@ -11,12 +11,17 @@ class MenuComponent extends Component {
     this.state = {
       restaurantData: null
     };
+    this.updateData = this.updateData.bind(this)
   }
   componentDidMount() {
+    this.updateData();
+    window.setInterval(this.updateData, MS_INTERVAL)
+  }
+  updateData() {
+    console.log("updating data")
     const apiURL = `http://localhost:3001/restaurants/`;
-    console.log(apiURL);
     let self = this;
-    axios.get(apiURL).then(function(response) {
+    axios.get(apiURL).then(function (response) {
       self.setState({ restaurantData: response.data });
     });
   }
@@ -27,7 +32,7 @@ class MenuComponent extends Component {
       return (
         <p key={course.title}>
           {course.title}{' '}
-          <span className='foodCodes'>{`(${course.properties})`}</span>
+          {course.properties.length > 0 ? <span className='foodCodes'>{`(${course.properties})`}</span> : null}
         </p>
       );
     });
