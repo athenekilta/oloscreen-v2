@@ -22,7 +22,7 @@ class MenuComponent extends Component {
   }
   renderSodexoMenu(restaurantData) {
     const openingHours =
-      restaurantData.openingHours[moment().weekday() - 2] || 'Suljettu tänään';
+      restaurantData.openingHours[moment().weekday()] || 'Suljettu tänään';
     const courses = restaurantData.menus[0].courses.map(course => {
       return (
         <p key={course.title}>
