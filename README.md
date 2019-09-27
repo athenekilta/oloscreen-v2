@@ -11,10 +11,21 @@ cd backend
 ```
 ## Usage
 Change directory back to project root of the project. Opening tmux or screen might help here.
-Run these commands:
-```npm start```
+### Startup script
+There's a startup script that starts the commands described below under manual starting.
+In project folder run:
+```
+./oloscreen.sh
+```
+### Manual startup
+If `./oloscreen.sh` doesn't work, you can try starting everything manually:
+```
+npm start
+```
 And then
-```cd backend```
+```
+cd backend
+```
 On backend run
 ```
 ./start.sh
