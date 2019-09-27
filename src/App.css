@@ -9,6 +9,7 @@ body {
   padding-top: 10px;
   overflow: hidden;
   font-family: 'Open Sans';
+  cursor: none;
 }
 .courses {
   max-width: 50%;
