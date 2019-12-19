@@ -28,14 +28,19 @@ class MenuComponent extends Component {
   renderSodexoMenu(restaurantData) {
     const openingHours =
       restaurantData.openingHours[moment().weekday()] || 'Suljettu tänään';
-    const courses = restaurantData.menus[0].courses.map(course => {
-      return (
-        <p key={course.title}>
-          {course.title}{' '}
-          {course.properties.length > 0 ? <span className='foodCodes'>{`(${course.properties})`}</span> : null}
-        </p>
-      );
-    });
+    let courses;
+    if (restaurantData.menus.length > 0) {
+
+
+      courses = restaurantData.menus[0].courses.map(course => {
+        return (
+          <p key={course.title}>
+            {course.title}{' '}
+            {course.properties.length > 0 ? <span className='foodCodes'>{`(${course.properties})`}</span> : null}
+          </p>
+        );
+      });
+    }
 
     return (
       <div>

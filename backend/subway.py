@@ -8,7 +8,7 @@ weekdays = ['ma', 'ti', 'ke', 'to', 'pe', 'la', 'su']
 
 def get_opening_hours():
     response = requests.get(subway_url)
-    html = response.text.encode('ISO-8859-1').decode('UTF-8')
+    html = response.text
     soup = BeautifulSoup(html.encode('utf-8'), 'html.parser')
     elements = soup.find('div', class_='restaurants_content').find('table').findAll('td')
     opening_hours = []
