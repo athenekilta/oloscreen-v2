@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 cd ~/oloscreen-v2/
 npm start &
 cd backend
