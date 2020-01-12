@@ -52,7 +52,7 @@ def sponsors():
 
 @app.route('/shoutbox/')
 def shoutbox():
-    dir = os.path.join(os.getcwd(), "./" "telegram-messages.txt")
+    dir = os.path.join(os.getcwd(), "telegram-messages.txt")
     with open(dir) as messages:
          # the last row is always empty
         return jsonify(messages.read().split("\n")[:-1])

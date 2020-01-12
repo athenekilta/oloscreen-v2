@@ -28,14 +28,18 @@ class MenuComponent extends Component {
   renderSodexoMenu(restaurantData) {
     const openingHours =
       restaurantData.openingHours[moment().weekday()] || 'Suljettu tänään';
-    const courses = restaurantData.menus[0].courses.map(course => {
-      return (
-        <p key={course.title}>
-          {course.title}{' '}
-          {course.properties.length > 0 ? <span className='foodCodes'>{`(${course.properties})`}</span> : null}
-        </p>
-      );
-    });
+    const courses = null
+    if(restaurantData.menus.length > 0){
+      courses = restaurantData.menus[0].courses.map(course => {
+        return (
+          <p key={course.title}>
+            {course.title}{' '}
+            {course.properties.length > 0 ? <span className='foodCodes'>{`(${course.properties})`}</span> : null}
+          </p>
+        );
+      });
+    }
+
 
     return (
       <div>
@@ -119,25 +123,30 @@ class MenuComponent extends Component {
         );
       }
     });
-
-    const openingHoursParsed = openingHours.split(', '); // split by ','
-    return (
-      <div>
-        <div style={{ display: 'flex' }}>
-          <div className='restaurant-title'>
-            <h2 className='restaurant'> TUAS</h2>
-            <i>
-              <p style={{ margin: 0 }}>{openingHoursParsed[0]}</p>
-              <p style={{ marginTop: 0 }}>
-                {openingHoursParsed[1].replace('a la carte', 'à la carte')}
-              </p>
-            </i>
+    if(openingHours){
+      const openingHoursParsed = openingHours.split(', '); // split by ','
+      return (
+        <div>
+          <div style={{ display: 'flex' }}>
+            <div className='restaurant-title'>
+              <h2 className='restaurant'> TUAS</h2>
+              <i>
+                <p style={{ margin: 0 }}>{openingHoursParsed[0]}</p>
+                <p style={{ marginTop: 0 }}>
+                  {openingHoursParsed[1].replace('a la carte', 'à la carte')}
+                </p>
+              </i>
+            </div>
+  
+            <div className='courses'> {courses}</div>
           </div>
-
-          <div className='courses'> {courses}</div>
         </div>
-      </div>
-    );
+      );
+    }
+    else{
+      return null
+    }
+   
   }
   render() {
     const { restaurantData } = this.state;
