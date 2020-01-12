@@ -28,9 +28,10 @@ class MenuComponent extends Component {
   renderSodexoMenu(restaurantData) {
     const openingHours =
       restaurantData.openingHours[moment().weekday()] || 'Suljettu tänään';
-    const courses = null
+    let courses = null
+    console.log(openingHours)
     if(restaurantData.menus.length > 0){
-      courses = restaurantData.menus[0].courses.map(course => {
+      courses = restaurantData.menus.map(course => {
         return (
           <p key={course.title}>
             {course.title}{' '}
@@ -159,7 +160,7 @@ class MenuComponent extends Component {
         <h1 id='menu-title'>NÄLKÄ?</h1>
         {this.renderSodexoMenu(restaurantData.sodexo)}
         {this.renderAmicaMenu(restaurantData.amica)}
-        {this.renderSubwayMenu(restaurantData.subway)}
+        {/*this.renderSubwayMenu(restaurantData.subway)*/}
       </div>
     );
   }
