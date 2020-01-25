@@ -36,6 +36,16 @@ def restaurants():
     for item in [('sodexo', sodexo_id), ('tuas', tuas_id), ('abloc', abloc_id)]:
         parse(*item)
 
+    def filter_foods(restaurant, keyword):
+        data[restaurant]['menus'] = [x for x in data[restaurant]['menus'] if not x['title'].startswith(keyword) ]
+
+    filters = {'abloc': ['Wicked', 'Pizza', 'Chef'], 'tuas': ['Jälkiruo', 'Erikoisannos', 'Fresh'] }
+
+    for restaurant, keywords in filters.items():
+        for keyword in keywords:
+            filter_foods(restaurant, keyword)
+
+
     return data
 
 if __name__ == "__main__":
