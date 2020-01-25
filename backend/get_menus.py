@@ -39,11 +39,20 @@ def restaurants():
     def filter_foods(restaurant, keyword):
         data[restaurant]['menus'] = [x for x in data[restaurant]['menus'] if not x['title'].startswith(keyword) ]
 
+    def remove_prefix(restaurant, prefix):
+        for item in data[restaurant]['menus']: 
+            if item['title'].startswith(prefix):
+                item['title'] = item['title'][len(prefix):]
+
     filters = {'abloc': ['Wicked', 'Pizza', 'Chef'], 'tuas': ['Jälkiruo', 'Erikoisannos', 'Fresh'] }
 
     for restaurant, keywords in filters.items():
         for keyword in keywords:
             filter_foods(restaurant, keyword)
+
+    remove_prefix('tuas', 'Kasvislounas: ')
+    remove_prefix('tuas', 'Lounas: ')
+    remove_prefix('abloc', 'Lounas: ')
 
 
     return data
@@ -51,4 +60,4 @@ def restaurants():
 if __name__ == "__main__":
     pprint(restaurants())
     data = restaurants()
-    pprint(data['abloc'])
+    pprint(data['tuas'])
