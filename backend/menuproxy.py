@@ -54,7 +54,7 @@ def restaurants():
 
     data = {"sodexo": {}}
     print("tässä", get_json(sodexo_opening_hours)[0]['openingHours'])
-    data['sodexo']['menus'] = get_json(sodexo_menu.format(timestamp))[sodexo_id][today.strftime("%Y-%m-%d")]
+    data['sodexo']['menus'] = get_json(sodexo_menu.format(timestamp))[sodexo_id].get(today.strftime("%Y-%m-%d"), [])
     data['sodexo']['openingHours'] =  get_json(sodexo_opening_hours)[0]['openingHours']
     data['amica'] = get_json(amica_url + amica_timestamp)
     # subway disabled for now
