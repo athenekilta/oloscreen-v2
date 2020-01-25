@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import requests
 import subway
 import os
+import get_menus
 
 
 app = Flask(__name__, static_folder='../build')
@@ -43,33 +44,7 @@ def get_json(url):
 
 @app.route('/restaurants/')
 def restaurants():
-    today = datetime.now()
-    timestamp = today.strftime("%Y/%m/%d")
-    # On 24.2.19, use monday as the date 25.2.19 for testing purposes
-    if timestamp == '2020/01/12':
-        today = datetime.now() + timedelta(days=1)
-        timestamp = today.strftime("%Y/%m/%d")
-    weekday = today.weekday()
-    amica_timestamp = "&date=" + today.strftime("%Y-%m-%d")
-
-    data = {"sodexo": {}}
-    print("tässä", get_json(sodexo_opening_hours)[0]['openingHours'])
-    data['sodexo']['menus'] = get_json(sodexo_menu.format(timestamp))[sodexo_id].get(today.strftime("%Y-%m-%d"), [])
-    data['sodexo']['openingHours'] =  get_json(sodexo_opening_hours)[0]['openingHours']
-    data['amica'] = get_json(amica_url + amica_timestamp)
-    # subway disabled for now
-   #if len(data['sodexo']['menus']):  # If there are menus on sodexo
-    #    data['subway'] = list(filter(lambda x: x['title'].find('Subway:') > -1, data['sodexo']['menus'][0]['courses']))[0]
-    #else:
-       # if weekday == 5:  # Hardcoded daily sub for Saturdays
-        #    title = "Kinkku"
-       # else:
-       #     title = ""  # Return empty title when closed
-      #  data['subway'] = {'title': title, "properties": []}
-    #data['subway']['title'] = data['subway']['title'].replace("Subway: ", "")
-    #data['subway']['openingHours'] = subway.get_opening_hours()[weekday]
-
-    return jsonify(data)
+    return jsonify(get_menus.restaurants())
 
 
 @app.route('/shoutbox/')
