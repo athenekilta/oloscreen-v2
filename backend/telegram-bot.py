@@ -1,5 +1,6 @@
 import telegram
 import files
+import requests
 from telegram.error import NetworkError, Unauthorized
 from time import sleep
 
@@ -24,6 +25,11 @@ def main():
                     if update.message.text:
                         if update.message.text.lower() in help_commands:
                             update.message.reply_text(help_text)
+                        elif update.message.text.lower() == "/ip":
+                            try:
+                                update.message.reply_text(requests.get("https://ipv6.zah.fi/").text)
+                            except:
+                                update.message.reply_text("O-ou, pieleen meni")
                         else:
                             update.message.reply_text("✅ checkistä!")
                             files.write_to_queue(update.message.text)
