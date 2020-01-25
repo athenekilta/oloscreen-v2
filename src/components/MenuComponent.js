@@ -5,6 +5,7 @@ import 'moment/locale/fi';
 import axios from 'axios';
 const MS_INTERVAL = 1000 * 60 * 60 * 12
 moment.locale('fi');
+
 class MenuComponent extends Component {
   constructor(props) {
     super(props);
@@ -55,129 +56,6 @@ class MenuComponent extends Component {
     );
   }
 
-  renderSodexoMenu(restaurantData) {
-    const openingHours =
-      restaurantData.openingHours[moment().weekday()] || 'Suljettu tänään';
-    let courses = null
-    console.log(openingHours)
-    if(restaurantData.menus.length > 0){
-      courses = restaurantData.menus.map(course => {
-        return (
-          <p key={course.title}>
-            {course.title}{' '}
-            {course.properties.length > 0 ? <span className='foodCodes'>{`(${course.properties})`}</span> : null}
-          </p>
-        );
-      });
-    }
-
-    return (
-      <div>
-        <div style={{ display: 'flex' }}>
-          <div className='restaurant-title'>
-            <h2 className='restaurant'> T-talo</h2>
-            <i>{openingHours}</i>
-          </div>
-
-          <div className='courses'> {courses}</div>
-        </div>
-      </div>
-    );
-  }
-
-  renderSubwayMenu(restaurantData) {
-    const openingHours = restaurantData.openingHours;
-    return (
-      <div>
-        <div style={{ display: 'flex' }}>
-          <div className='restaurant-title'>
-            <h2 className='restaurant'> Subway</h2>
-            <i>{openingHours}</i>
-          </div>
-          <div className='courses' id='subway-courses'>
-            {restaurantData.title}{' '}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  formatCourseName(name) {
-    return name.split('(');
-  }
-
-  renderAmicaMenu(restaurantData) {
-    if (restaurantData.MenusForDays.length === 0) {
-      return null;
-    }
-    const openingHours = restaurantData.MenusForDays[0].LunchTime;
-    // eslint-disable-next-line
-    const courses = restaurantData.MenusForDays[0].SetMenus.map(course => {
-      const courseName = course.Name.toLowerCase();
-      if (courseName.includes('lounas')) {
-        return (
-          <div key={course.Components.join(', ')}>
-            <p>
-              {course.Components.map(component => {
-                return (
-                  <span key={component}>
-                    {this.formatCourseName(component)[0]}
-                    <span className='foodCodes'>
-                      {'(' + this.formatCourseName(component)[1]}
-                    </span>
-                    <br />
-                  </span>
-                );
-              })}
-            </p>
-          </div>
-        );
-      } else if (courseName.includes('bufee')) {
-        return (
-          <div key={course.Components.join(', ')}>
-            <b>Salaatti</b>
-            <p style={{ marginTop: '6px' }}>
-              {course.Components.map(component => {
-                return (
-                  <span key={component}>
-                    {this.formatCourseName(component)[0]}
-                    <span className='foodCodes'>
-                      {'(' + this.formatCourseName(component)[1]}
-                    </span>
-                    <br />
-                  </span>
-                );
-              })}
-            </p>
-          </div>
-        );
-      }
-    });
-    if(openingHours){
-      const openingHoursParsed = openingHours.split(', '); // split by ','
-      return (
-        <div>
-          <div style={{ display: 'flex' }}>
-            <div className='restaurant-title'>
-              <h2 className='restaurant'> TUAS</h2>
-              <i>
-                <p style={{ margin: 0 }}>{openingHoursParsed[0]}</p>
-                <p style={{ marginTop: 0 }}>
-                  {openingHoursParsed[1].replace('a la carte', 'à la carte')}
-                </p>
-              </i>
-            </div>
-  
-            <div className='courses'> {courses}</div>
-          </div>
-        </div>
-      );
-    }
-    else{
-      return null
-    }
-   
-  }
   render() {
     const { restaurantData } = this.state;
     if (!restaurantData) {
@@ -190,7 +68,6 @@ class MenuComponent extends Component {
         {this.renderMenu(restaurantData.sodexo, 'T-Talo')}
         {this.renderMenu(restaurantData.abloc, 'A bloc')}
         {this.renderMenu(restaurantData.tuas, 'TUAS')}
-        {/*this.renderSubwayMenu(restaurantData.subway)*/}
       </div>
     );
   }
