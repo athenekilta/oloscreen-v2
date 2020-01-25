@@ -25,6 +25,36 @@ class MenuComponent extends Component {
       self.setState({ restaurantData: response.data });
     });
   }
+  
+  renderMenu(restaurantData, restaurantTitle) {
+    const openingHours = restaurantData.openingHours[moment().weekday()] || 'Suljettu tänään';
+    let courses = null
+    console.log(openingHours)
+    if (restaurantData.menus.length > 0){
+      courses = restaurantData.menus.map(course => {
+        return (
+          <p key={course.title}>
+            {course.title}{' '}
+            {course.properties.length > 0 ? <span className='foodCodes'>{`(${course.properties})`}</span> : null}
+          </p>
+        );
+      });
+    }
+    
+    return (
+      <div>
+        <div style={{ display: 'flex' }}>
+          <div className='restaurant-title'>
+            <h2 className='restaurant'>{restaurantTitle}</h2>
+            <i>{openingHours}</i>
+          </div>
+
+          <div className='courses'> {courses}</div>
+        </div>
+      </div>
+    );
+  }
+
   renderSodexoMenu(restaurantData) {
     const openingHours =
       restaurantData.openingHours[moment().weekday()] || 'Suljettu tänään';
@@ -40,7 +70,6 @@ class MenuComponent extends Component {
         );
       });
     }
-
 
     return (
       <div>
@@ -158,8 +187,9 @@ class MenuComponent extends Component {
     return (
       <div className='food-menu'>
         <h1 id='menu-title'>NÄLKÄ?</h1>
-        {this.renderSodexoMenu(restaurantData.sodexo)}
-        {this.renderAmicaMenu(restaurantData.amica)}
+        {this.renderMenu(restaurantData.sodexo, 'T-Talo')}
+        {this.renderMenu(restaurantData.abloc, 'A bloc')}
+        {this.renderMenu(restaurantData.tuas, 'TUAS')}
         {/*this.renderSubwayMenu(restaurantData.subway)*/}
       </div>
     );
