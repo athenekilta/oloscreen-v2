@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import axios from "axios";
+
+
+function importAll(r) {
+  return r.keys().map(r);
+}
+
+const sponsorLogos = importAll(require.context('../assets/sponsor-logos/', true, /\.png/));
 
 class SponsorComponent extends Component {
   constructor(props) {
@@ -10,14 +16,11 @@ class SponsorComponent extends Component {
     };
   }
   componentDidMount() {
-    const apiURL = `http://localhost:3001/sponsor-logos/`;
-    let self = this;
-    axios.get(apiURL).then(function (response) {
-      self.setState({
-        sponsorLogos: response.data,
-        currentLogo: response.data[0]
-      });
+    this.setState({
+      sponsorLogos: sponsorLogos,
+      currentLogo: sponsorLogos[0]
     });
+
     setInterval(this.updateSponsor, 20000);
   }
   updateSponsor = () => {
@@ -34,7 +37,7 @@ class SponsorComponent extends Component {
         {this.state.sponsorLogos ? (
           <img
             alt="sponsorLogo"
-            src={require("../assets/sponsor-logos/" + this.state.currentLogo)}
+            src={this.state.currentLogo}
           />
         ) : null}
       </div>
