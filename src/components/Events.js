@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import moment from 'moment';
+const MS_INTERVAL = 1000 * 60 * 60 * 12
 
 class Events extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Events extends Component {
 
   componentDidMount = () => {
     this.getEvents();
+    window.setInterval(this.getEvents, MS_INTERVAL);
   };
 
   getEvents() {
