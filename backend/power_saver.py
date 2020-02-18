@@ -17,7 +17,14 @@ def is_day():
     hour = datetime.now().hour
     return hour > 7 and hour < 20
 
-if not is_day() and get_brightness() < 50:
+action = ""
+brightness = get_brightness()
+if not is_day() and brightness < 50:
     power(0)
+    action = "Off"
 else:
     power(1)
+    action = "On"
+
+with open('/home/pi/powersaver_log.txt', 'a') as f:
+    f.write("{}: {}, {}, {}\n".format(datetime.now().strftime('%d.%m %H:%M'),action, int(brightness), is_day()))
