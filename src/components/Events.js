@@ -18,7 +18,7 @@ class Events extends Component {
   };
 
   getEvents = () => {
-    const apiURL = `http://localhost:3001/calendar/`;
+    const apiURL = `api/calendar/`;
     let self = this;
     axios.get(apiURL).then(function (response) {
       self.setState({
