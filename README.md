@@ -1,33 +1,51 @@
 # Oloscreen 2
 This software is used in Athene's guild room's information screen.
-## Installation
-Clone the repository.
-```git clone https://github.com/athenekilta/oloscreen-v2.git```
-Set it all up
+## Installation & usage
+Clone the repository and cd into it.
+
+```bash
+git clone https://github.com/athenekilta/oloscreen-v2.git
+cd oloscreen-v2/
+```
+
+You must place a `.env` file in the root directory. Its contents should be something like this:
+```bash
+REACT_APP_GOOGLE_API_KEY=your_api_key
+REACT_APP_GOOGLE_CAL_ID=your_calendar_id
+OLOSCREEN_TELEGRAM_TOKEN=your_telegram_bot_token
+```
+
+### Using docker
+```bash
+docker-compose up
+```
+And after making changes, it is best to shut down current docker-compose (try pressing ctrl-c a few times) and run these three commands:
+```bash
+docker-compose rm   # answer y when prompted
+docker-compose build
+docker-compose up
+```
+
+### Without docker (not recommended)
+It is possible to start the system without using docker, but it is not recommended and these instructions might not work.
 ```
 npm install
 cd backend
 ./setup.sh
 ```
-## Usage
+
 Change directory back to project root of the project. Opening tmux or screen might help here.
-### Startup script
+#### Startup script
 There's a startup script that starts the commands described below under manual starting.
 In project folder run:
 ```
 ./oloscreen.sh
 ```
-### Manual startup
+#### Manual startup
 If `./oloscreen.sh` doesn't work, you can try starting everything manually:
 ```
 npm start
-```
-And then
-```
 cd backend
-```
-On backend run
-```
 ./start.sh
 ```
 ```
