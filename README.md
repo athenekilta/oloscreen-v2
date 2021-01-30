@@ -16,18 +16,25 @@ OLOSCREEN_TELEGRAM_TOKEN=your_telegram_bot_token
 ```
 
 ### Using docker
+There are no separate dev/prod docker configurations.
+
+You must first create a production version of the react app.
+The file [docker-compose-build.yml](./docker-compose-build.yml) is used with docker-compose to produce needed static files.
+After that you can spin up the actual container.
 ```bash
+docker-compose --file docker-compose-build.yml up
 docker-compose up
 ```
-And after making changes, it is best to shut down current docker-compose (try pressing ctrl-c a few times) and run these three commands:
+And after making changes, it is best to shut down current docker-compose (try pressing ctrl-c a few times) and run these commands:
 ```bash
+docker-compose --file docker-compose-build.yml up
 docker-compose rm   # answer y when prompted
 docker-compose build
 docker-compose up
 ```
 
 ### Without docker (not recommended)
-It is possible to start the system without using docker, but it is not recommended and these instructions might not work.
+It is possible to start the system without using docker, but it is not recommended and these instructions might not work. **As docker is currently the primary way to run Oloscreen, the source code is modified so that it probably won't run without docker (or nginx without docker) if the source code is not changed.**
 ```
 npm install
 cd backend
