@@ -13,7 +13,7 @@ class SponsorComponent extends Component {
         setInterval(this.updateShouts, 5000);
     }
     updateShouts = () => {
-        const apiURL = `http://localhost:3001/shoutbox/`;
+        const apiURL = `api/shoutbox/`;
         let self = this;
         axios.get(apiURL).then(function (response) {
             self.setState({

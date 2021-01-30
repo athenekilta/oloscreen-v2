@@ -7,7 +7,8 @@ import get_menus
 from calendar_client import get_future_events
 
 
-app = Flask(__name__, static_folder='../build')
+application = Flask(__name__, static_folder='../build')
+app = application
 
 # Serve React App
 

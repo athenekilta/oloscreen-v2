@@ -1,4 +1,5 @@
 #!/bin/sh
 
-FLASK_APP=/app/backend/menuproxy.py python -m flask run --port=3001 --host=0.0.0.0 &
-python /app/backend/telegram-bot.py
+cd /app/backend/
+python ./telegram-bot.py &
+gunicorn -b 0.0.0.0:3001 menuproxy
