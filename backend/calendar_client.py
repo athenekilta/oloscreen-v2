@@ -42,5 +42,5 @@ def get_future_events():
             events.append(parsed)
 
     events.sort(key=lambda x: x['startdt'].timetuple())
-    return events
+    return events[:3]
 

@@ -10,8 +10,6 @@ cd oloscreen-v2/
 
 You must place a `.env` file in the root directory. Its contents should be something like this:
 ```bash
-REACT_APP_GOOGLE_API_KEY=your_api_key
-REACT_APP_GOOGLE_CAL_ID=your_calendar_id
 OLOSCREEN_TELEGRAM_TOKEN=your_telegram_bot_token
 ```
 
