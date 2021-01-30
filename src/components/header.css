@@ -1,8 +1,8 @@
 header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 8em;
   color: white;
+  margin: 0 10px;
 }
 
 header * {
@@ -60,5 +60,26 @@ header * {
   }
   100% {
     opacity: 0;
+  }
+}
+
+
+@media only screen and (max-width:1125px) {
+  #time-date { 
+    font-size: 0.6em
+  }
+  #time-clock {
+    font-size: 3em;
+  }
+
+  #sponsor-logos * {
+    height: 0.6em;
+  }
+}
+
+@media only screen and (max-width:700px) {
+  header {
+    grid-template-rows: 4rem 4rem 4rem;
+    grid-template-columns: 1fr;
   }
 }
