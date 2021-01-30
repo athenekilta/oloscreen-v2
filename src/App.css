@@ -50,6 +50,7 @@ body {
   font-size: 1.35rem;
   text-align: left;
   max-width: 500px;
+  min-width: 350px;
   height: 70vh;
 }
 
