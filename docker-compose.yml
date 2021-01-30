@@ -1,20 +1,14 @@
 version: '3.3'
 
 services:
-  oloscreen_node:
-    container_name: oloscreen_node
-    env_file:
-      - .env
-    build:
-      context: .
-      dockerfile: Dockerfile
+  oloscreen_nginx:
+    build: ./nginx
+    restart: always
     volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      - './build/:/build/'
     ports:
       - 3000:3000
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+
   oloscreen_backend:
     container_name: oloscreen_backend
     env_file:
