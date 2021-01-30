@@ -1,8 +1,8 @@
 version: '3.3'
 
 services:
-  oloscreen_node:
-    container_name: oloscreen_node
+  oloscreen_node_builder:
+    container_name: oloscreen_node_builder
     env_file:
       - .env
     build:
