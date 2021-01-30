@@ -47,7 +47,6 @@ def restaurants():
     return jsonify(get_menus.restaurants())
 
 
-@app.route('/shoutbox/')
 def shoutbox():
     dir = os.path.join(os.getcwd(), "telegram-messages.txt")
     try:
