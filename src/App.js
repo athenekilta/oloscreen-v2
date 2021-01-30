@@ -11,12 +11,16 @@ class App extends Component {
     return (
       <div className="App">
         <HeaderComponent />
-        <MenuComponent />
-        <div className="eventContainer">
-          <Events />
-          <Countdown />
+        <div class="content-wrap">
+          <MenuComponent />
+          <div>
+            <div className="eventContainer">
+              <Events />
+              <Countdown />
+            </div>
+            <ShoutboxComponent />
+          </div>
         </div>
-        <ShoutboxComponent />
       </div>
     );
   }

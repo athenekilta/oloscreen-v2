@@ -2,14 +2,17 @@
   text-align: center;
   width: 100%;
 }
+
+.content-wrap {
+  display: flex;
+  justify-content: space-around;
+}
+
 body {
   background-color: #171717;
   color: white;
-  height: 100vh;
   padding-top: 10px;
-  overflow: hidden;
   font-family: 'Open Sans';
-  cursor: none;
 }
 .courses {
   max-width: 50%;
@@ -46,11 +49,8 @@ body {
 .food-menu {
   font-size: 1.35rem;
   text-align: left;
-  margin-left: 0rem;
-  margin-top: 2%;
-  width: 60vw;
+  max-width: 500px;
   height: 70vh;
-  float: left;
 }
 
 .restaurant {
@@ -97,9 +97,10 @@ h1 {
 }
 
 .countdown,
-.events {
-  width: 500px;
-  float: left;
+.events,
+#shouts {
+  margin: 0 auto;
+  max-width: 500px;
 }
 
 .countdown > h1,
@@ -131,11 +132,6 @@ h1 {
   font-weight: bold;
 }
 
-#shouts {
-  float: left;
-  width: 500px;
-}
-
 #shouts > h1 {
   margin: 0px;
   margin-top: 20px;
@@ -148,4 +144,14 @@ h1 {
 }
 #shouts > div {
   font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 1000px) {
+  .content-wrap {
+    flex-direction: column-reverse;
+  }
+
+  .food-menu {
+    margin: 2% auto;
+  }
 }
