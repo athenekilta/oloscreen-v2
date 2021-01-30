@@ -4,6 +4,7 @@ import requests
 import subway
 import os
 import get_menus
+from calendar_client import get_future_events
 
 
 app = Flask(__name__, static_folder='../build')
@@ -29,7 +30,6 @@ amica_url = "https://www.fazerfoodco.fi/modules/json/json/Index?costNumber=0199&
 sodexo_menu = 'https://kitchen.kanttiinit.fi/menus?lang=fi&restaurants=' + sodexo_id + '&days={}/'
 
 sodexo_opening_hours = f'https://kitchen.kanttiinit.fi/restaurants?lang=fi&ids={sodexo_id}'
-
 
 
 @app.after_request
@@ -58,6 +58,10 @@ def shoutbox():
         with open(dir, 'w') as messages:
             pass
         return jsonify([])
+
+@app.route('/calendar/')
+def calendar(): 
+    return jsonify(get_future_events())
 
 
 if __name__ == "__main__":
