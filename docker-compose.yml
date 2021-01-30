@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  oloscreen_nginx:
+    build: ./nginx
+    restart: always
+    volumes:
+      - './build/:/build/'
+    ports:
+      - 3000:3000
+
+  oloscreen_backend:
+    container_name: oloscreen_backend
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    volumes:
+      - '.:/app'
+      - '/app/backend'
+    ports:
+      - 3001:3001
