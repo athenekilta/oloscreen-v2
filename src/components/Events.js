@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../App.css';
 import moment from 'moment';
-const MS_INTERVAL = 1000 * 60 * 60 * 12
+import axios from "axios";
+const MS_INTERVAL = 1000 * 60 * 60 * 6
 
 class Events extends Component {
   constructor(props) {
@@ -16,32 +17,15 @@ class Events extends Component {
     window.setInterval(this.getEvents, MS_INTERVAL);
   };
 
-  getEvents() {
-    let that = this;
-    function start() {
-      window.gapi.client
-        .init({
-          apiKey: process.env.REACT_APP_GOOGLE_API_KEY
-        })
-        .then(function() {
-          return window.gapi.client.request({
-            path: `https://www.googleapis.com/calendar/v3/calendars/athenekilta@gmail.com/events?singleEvents=true&orderBy=startTime&timeMin=${moment().toISOString()}&maxResults=3`
-          });
-        })
-        .then(
-          response => {
-            // Google cal sorts events by edit time, sorting here by event time
-            let events = response.result.items;
-            that.setState({
-              events
-            });
-          },
-          function(reason) {
-            console.log(reason);
-          }
-        );
-    }
-    window.gapi.load('client', start);
+  getEvents = () => {
+    const apiURL = `api/calendar/`;
+    let self = this;
+    axios.get(apiURL).then(function (response) {
+      self.setState({
+        events: response.data
+      });
+    });
+
   }
 
   render() {
@@ -52,9 +36,9 @@ class Events extends Component {
         {events
           ? events.map(i => {
               return (
-                <div key={i.id}>
+                <div key={events.indexOf(i)}>
                   <p className='eventTime'>
-                    {moment(i.start.dateTime).format('llll')}
+		    {moment(i.startdt).format('llll')}
                   </p>
                   <h2 className='eventTitle'>{i.summary}</h2>
                 </div>

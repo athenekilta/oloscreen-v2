@@ -4,6 +4,7 @@ import requests
 import subway
 import os
 import get_menus
+from calendar_client import get_future_events
 
 
 application = Flask(__name__, static_folder='../build')
@@ -32,7 +33,6 @@ sodexo_menu = 'https://kitchen.kanttiinit.fi/menus?lang=fi&restaurants=' + sodex
 sodexo_opening_hours = f'https://kitchen.kanttiinit.fi/restaurants?lang=fi&ids={sodexo_id}'
 
 
-
 @app.after_request
 def allow_cors(response):
     response.headers['Access-Control-Allow-Origin'] = "*"
@@ -59,6 +59,10 @@ def shoutbox():
         with open(dir, 'w') as messages:
             pass
         return jsonify([])
+
+@app.route('/calendar/')
+def calendar(): 
+    return jsonify(get_future_events())
 
 
 if __name__ == "__main__":
