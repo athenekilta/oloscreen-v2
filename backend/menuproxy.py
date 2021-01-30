@@ -50,9 +50,14 @@ def restaurants():
 @app.route('/shoutbox/')
 def shoutbox():
     dir = os.path.join(os.getcwd(), "telegram-messages.txt")
-    with open(dir) as messages:
-         # the last row is always empty
-        return jsonify(messages.read().split("\n")[:-1])
+    try:
+        with open(dir) as messages:
+            # the last row is always empty
+            return jsonify(messages.read().split("\n")[:-1])
+    except FileNotFoundError:
+        with open(dir, 'w') as messages:
+            pass
+        return jsonify([])
 
 
 if __name__ == "__main__":
