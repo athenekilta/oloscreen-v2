@@ -6,12 +6,14 @@ import os
 import get_menus
 
 
-application = Flask(__name__)
+application = Flask(__name__, static_folder='../build')
 app = application
 
-api_path = '/api'
+# Serve React App
 
-@app.route(api_path + '/<path:path>')
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
 def serve(path):
     if path != "":
         return send_from_directory(app.static_folder, path)
@@ -41,12 +43,12 @@ def get_json(url):
     return requests.get(url).json()
 
 
-@app.route(api_path + '/restaurants/')
+@app.route('/restaurants/')
 def restaurants():
     return jsonify(get_menus.restaurants())
 
 
-@app.route(api_path + '/shoutbox/')
+@app.route('/shoutbox/')
 def shoutbox():
     dir = os.path.join(os.getcwd(), "telegram-messages.txt")
     try:
