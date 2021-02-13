@@ -26,7 +26,7 @@ def parse_recur(event, rule):
     return events
 
 
-def get_future_events():
+def get_future_events(limit=3):
     calendar_data = requests.get(athene_calendar_url).text
     cal = Calendar().from_ical(calendar_data)
     events = []
@@ -49,5 +49,14 @@ def get_future_events():
             events.append(parsed)
 
     events.sort(key=lambda x: x['startdt'].timetuple())
-    return events[:3]
+    if limit:
+        return events[:limit]
+    else:
+        return events
 
+def get_next_hype_event():
+    events = get_future_events(limit=False)
+    for event in events:
+        if "#hype" in event['summary']:
+            return [event]
+    return []

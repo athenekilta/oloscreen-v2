@@ -4,7 +4,7 @@ import requests
 import subway
 import os
 import get_menus
-from calendar_client import get_future_events
+from calendar_client import get_future_events, get_next_hype_event
 
 
 application = Flask(__name__, static_folder='../build')
@@ -64,6 +64,9 @@ def shoutbox():
 def calendar(): 
     return jsonify(get_future_events())
 
+@app.route('/hype/')
+def hype():
+    return jsonify(get_next_hype_event())
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
