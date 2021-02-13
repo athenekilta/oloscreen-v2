@@ -19,7 +19,6 @@ def parse_recur(event, rule):
             for xdate in exdate.dts:
                 rules.exdate(xdate.dt)
     for startdt in list(rules):
-        print(startdt)
         tmp_event = copy.deepcopy(event)
         tmp_event['startdt'] = startdt
         tmp_event['exdate'] = None
