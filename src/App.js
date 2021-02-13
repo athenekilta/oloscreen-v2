@@ -3,6 +3,7 @@ import './App.css';
 import HeaderComponent from './components/Header.js';
 import MenuComponent from './components/MenuComponent.js';
 import ShoutboxComponent from './components/ShoutboxComponent.js';
+import Countdown from './components/Countdown';
 import Events from './components/Events';
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
           <div>
             <div className="eventContainer">
               <Events />
+              <Countdown />
             </div>
             <ShoutboxComponent />
           </div>
