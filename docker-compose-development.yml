@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  oloscreen_nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile-development
+    restart: always
+    volumes:
+      - './build/:/build/'
+    ports:
+      - 3000:3000
+
+  oloscreen_backend:
+    container_name: oloscreen_backend
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    volumes:
+      - '.:/app'
+      - '/app/backend'
+    ports:
+      - 3001:3001
+
+  oloscreen_react:
+    container_name: oloscreen_react
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile-react
+    ports:
+      - 3002:3002
