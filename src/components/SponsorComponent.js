@@ -5,7 +5,8 @@ function importAll(r) {
   return r.keys().map(r);
 }
 
-const sponsorLogos = importAll(require.context('../assets/sponsor-logos/', true, /\.png/));
+const sponsorLogos = importAll(require.context('../assets/sponsor-logos/', true, /\.png/))
+    .map(a => a.default);
 
 class SponsorComponent extends Component {
   constructor(props) {
