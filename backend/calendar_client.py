@@ -7,14 +7,22 @@ import copy
 athene_calendar_url = "https://www.google.com/calendar/ical/athenekilta%40gmail.com/public/basic.ics"
 
 # icalendar parsing based on https://gist.github.com/meskarune/63600e64df56a607efa211b9a87fb443
-
-# Does not take into account the possible exdate field
 def parse_recur(event, rule):
-    rule = rrule.rrulestr(rule, dtstart=event['startdt'])
+    rules = rrule.rruleset()
+    first_rule = rrule.rrulestr(rule, dtstart=event['startdt'])
+    rules.rrule(first_rule)
     events = []
-    for startdt in list(rule):
+    if event['exdate']:
+        if not isinstance(event['exdate'], list):
+            event['exdate'] = [event['exdate']]
+        for exdate in event['exdate']:
+            for xdate in exdate.dts:
+                rules.exdate(xdate.dt)
+    for startdt in list(rules):
+        print(startdt)
         tmp_event = copy.deepcopy(event)
         tmp_event['startdt'] = startdt
+        tmp_event['exdate'] = None
         events.append(tmp_event)
     return events
 
