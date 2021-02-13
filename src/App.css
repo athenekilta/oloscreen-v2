@@ -118,11 +118,12 @@ h1 {
   border: 2px #8bc34a solid;
   margin: 0 20px 0px;
   padding: 5px 0 15px;
+  font-size: min(3.5vw, 1em);
 }
 
 .countbox {
   float: left;
-  padding: 5px 10px;
+  padding: 5px min(2vw, 10px);
   margin: 0 5px;
   width: 75px;
 }
