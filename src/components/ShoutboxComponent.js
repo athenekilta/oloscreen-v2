@@ -27,7 +27,11 @@ class SponsorComponent extends Component {
         return (
             <div id="shouts">
                 <h1>HUUTOLOOTA</h1>
-                <h4> TG: @OloscreenBot</h4>
+                <h4>TG:
+                  <a target="_blank" href="https://t.me/oloscreenbot">
+                    @OloscreenBot
+                  </a>
+                </h4>
                 {shouts.map(shout =>
                     <div>{shout}</div>)}
 
