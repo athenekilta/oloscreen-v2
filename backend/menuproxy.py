@@ -48,7 +48,7 @@ def get_json(url):
 def restaurants():
     return jsonify(get_menus.restaurants())
 
-@app.route('/logo-links')
+@app.route('/logo-links/')
 def logo_links():
     return jsonify(get_logos.get_all_logo_links())
 
