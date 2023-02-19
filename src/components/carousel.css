@@ -1,0 +1,36 @@
+img {
+    height: 5rem;
+    padding: 0 15px;
+    object-fit: cover;
+}
+
+.sponsor-img {
+    filter: brightness(0) invert(18%) sepia(0%) saturate(1347%) hue-rotate(173deg) brightness(97%) contrast(94%);
+}
+  
+  img:last-of-type {
+    padding-left: 0;
+  }
+
+  
+  .wrapper {
+    display: flex;
+  }
+  
+  section {
+    display: flex;
+    animation: swipe var(--speed) linear infinite backwards;
+    gap: 2rem;
+    overflow: hidden;
+    z-index: 0;
+  }
+  
+  @keyframes swipe {
+    0% {
+      transform: translate(0);
+    }
+  
+    100% {
+      transform: translate(-100%);
+    }
+  }

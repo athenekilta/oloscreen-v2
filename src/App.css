@@ -1,24 +1,26 @@
 .App {
   text-align: center;
   width: 100%;
+  overflow: hidden;
 }
 
 .content-wrap {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 body {
-  background-color: #171717;
-  color: white;
+  color: #333333;
+  background-color: #F4EEE7;
   padding-top: 10px;
   font-family: 'Open Sans';
 }
 .courses {
-  max-width: 50%;
-  margin-left: 30px;
+  max-width: 100%;
   text-align: left;
-  position: relative;
+  font-size: 1.8em;
 }
 .courses:before {
   content: '';
@@ -29,7 +31,7 @@ body {
   left: -10px;
   top: 14px;
 
-  background-color: #8bc34a;
+  background-color: #5e8c64;
 }
 #subway-courses {
   padding-top: 16px;
@@ -38,53 +40,55 @@ body {
 #subway-courses:before {
   content: '';
   height: calc(100% - 10px);
-  width: 1px;
+  width: 5px;
 
   position: absolute;
   left: -10px;
   top: 14px;
 
-  background-color: #8bc34a;
+  background-color: white;
 }
 .food-menu {
-  font-size: 1.35rem;
   text-align: left;
-  max-width: 500px;
-  min-width: 350px;
-  height: 70vh;
+  display: flex;
+  justify-content: space-around;
+  margin: 1em;
 }
 
 .restaurant {
   margin-bottom: 0.3rem;
   margin-top: 0.8rem;
   text-transform: uppercase;
-  color: #8bc34a;
+  color: #5e8c64;
 }
 .restaurant-title {
-  text-align: right;
-  width: 30%;
+  text-align: left;
+  width: 100%;
+  font-size: 1.5em;
 }
 
 .foodCodes {
   font-weight: 800;
-  font-size: 0.8rem;
+  font-size: 1em;
   margin-left: 5px;
-  color: #8bc34a;
+  color: #5e8c64;
   vertical-align: middle;
 }
 
 #menu-title {
   margin-left: 33%;
-  font-size: 2rem;
+  font-size: 1.2em;
   margin-bottom: 0.5rem;
   letter-spacing: 0.2rem;
 }
 h1 {
-  color: #8bc34a;
+  color: #5e8c64;
 }
 
 .eventContainer {
-  margin-top: 2%;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 }
 
 .eventTime {
@@ -97,11 +101,21 @@ h1 {
   margin-top: 0;
 }
 
-.countdown,
+h1 {
+  font-size: 2em;
+}
+
 .events,
 #shouts {
   margin: 0 auto;
   max-width: 500px;
+  border: 3px #5e8c64;
+  border-style: none none none solid;
+  padding: 1em;
+  margin: 1em;
+  width: 25vw;
+  text-align: left;
+  font-size: 1.2em;
 }
 
 .countdown > h1,
@@ -137,7 +151,7 @@ h1 {
 #shouts > h1 {
   margin: 0px;
   margin-top: 20px;
-  color: #8bc34a;
+  color: #5e8c64;
   letter-spacing: 0.2rem;
 }
 #shouts > h4 {
@@ -149,11 +163,11 @@ h1 {
 }
 
 @media only screen and (max-width: 1000px) {
-  .content-wrap {
-    flex-direction: column-reverse;
-  }
+
 
   .food-menu {
-    margin: 2% auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }

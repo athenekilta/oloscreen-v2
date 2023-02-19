@@ -44,7 +44,7 @@ class MenuComponent extends Component {
     
     return (
       <div>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '25vw', border: '3px #5e8c64', borderStyle: 'none none none solid', padding: '1em', margin: '1em' }}>
           <div className='restaurant-title'>
             <h2 className='restaurant'>{restaurantTitle}</h2>
             <i>{openingHours}</i>
@@ -64,7 +64,6 @@ class MenuComponent extends Component {
     console.log(restaurantData);
     return (
       <div className='food-menu'>
-        <h1 id='menu-title'>NÄLKÄ?</h1>
         {this.renderMenu(restaurantData.sodexo, 'T-Talo')}
         {this.renderMenu(restaurantData.abloc, 'A bloc')}
         {this.renderMenu(restaurantData.tuas, 'TUAS')}
