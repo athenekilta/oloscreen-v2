@@ -14,7 +14,7 @@ class SponsorComponent extends Component {
     }
     updateShouts = () => {
         //api/shoutbox/
-        const apiURL = `http://localhost:3001/shoutbox/`;
+        const apiURL = `api/shoutbox/`;
         let self = this;
         axios.get(apiURL).then(function (response) {
             self.setState({

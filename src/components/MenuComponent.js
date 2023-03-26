@@ -20,7 +20,7 @@ class MenuComponent extends Component {
   }
   updateData() {
     console.log("updating data")
-    const apiURL = `http://localhost:3001/restaurants/`;
+    const apiURL = `api/restaurants/`;
     let self = this;
     axios.get(apiURL).then(function (response) {
       self.setState({ restaurantData: response.data });
