@@ -5,6 +5,12 @@ header {
   gap: 2rem;
 }
 
+.App-header {
+  position: fixed;
+  top: 0;
+  background-color: #F4EEE7;
+}
+
 .date-time {
   display: flex;
   font-size: 1em;
@@ -22,6 +28,9 @@ header {
   width: 100%;
   height: 200px;
   padding: 2rem;
+}
+.app-header-time2 {
+  display: none;
 }
 
 .header-separator {
@@ -84,6 +93,11 @@ header * {
   animation-timing-function: ease-in-out;
 }
 
+.padding-cont {
+  padding-top: 15rem;
+  z-index: 1;
+}
+
 @keyframes fade-out-keyframes {
   from {
     opacity: 1;
@@ -109,16 +123,50 @@ header * {
   #time-clock {
     font-size: 3em;
   }
-
-  #sponsor-logos * {
-    height: 0.6em;
-    z-index: 0;
-  }
 }
 
-@media only screen and (max-width:700px) {
-  header {
-    grid-template-rows: 4rem 4rem 4rem;
-    grid-template-columns: 1fr;
+@media only screen and (max-width: 700px) {
+
+  Header {
+    display: flex;
+    }
+
+  .app-header-time {
+    display: none;
+  }
+
+  .padding-cont {
+    padding-top: 20rem;
+  }
+
+  .app-header-time2 {
+    display: flex;
+    width: 100%;
+    font-size: 48px;
+    padding: 0.5rem;
+    flex-direction: column;
+    grid-gap: 0;
+    position: fixed;
+    top: 7rem;
+    background-color: #F4EEE7;
+  }
+
+  #time-clock {
+    font-size: 48px;
+    margin: 1rem;
+  }
+
+  #day {
+    font-size: 24px;
+  }
+
+  #date {
+    font-size: 24px;
+  }
+
+  #time-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

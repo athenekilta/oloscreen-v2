@@ -39,6 +39,17 @@ class HeaderComponent extends Component {
           </div>
           <SponsorComponent />
         </header>
+        <div className="app-header-time2">
+            <p id="time-clock"> {this.state.time.format("LTS")} </p>
+            <div id="time-date">
+              <div id="day-date">
+                <p id="day"> {this.state.time.format("dddd")}</p> <p id="date">{this.state.time.format("D.M")}. </p>
+              </div>
+              <div id="day-date">
+                <p id="day">viikko</p> <p id="date">{this.state.time.get("week")}</p>
+              </div>
+            </div>
+          </div>
       </div>
     );
   }

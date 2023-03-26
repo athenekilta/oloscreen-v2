@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  z-index: 0;
 }
 
 body {
@@ -175,9 +176,21 @@ h1 {
 @media only screen and (max-width: 1000px) {
 
 
+  .eventContainer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+
+  .content-wrap {
+    justify-content: normal;
+  }
+
   .food-menu {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    min-width: 90%;
   }
 }

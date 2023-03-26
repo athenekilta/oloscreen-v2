@@ -10,6 +10,24 @@ import ProgressBar from './ProgressBar';
 
 const Container = () => {
     const [show, setShow] = React.useState(true)
+    const windowSize = React.useRef([window.innerWidth, window.innerHeight]);
+
+
+  
+    function pageScroll() {
+      window.scrollBy(0,1)
+      setTimeout(pageScroll, 20);
+  }
+    
+    const autoScroll = () => {
+      if(windowSize.current[0]===1920) {
+        pageScroll()
+      }
+      
+    }
+
+    autoScroll()
+
 
     useEffect(() => {
       const interval = setInterval(() => {
@@ -23,8 +41,9 @@ const Container = () => {
     <div>
         <div className="App">
         <HeaderComponent />
+        <div className='padding-cont'></div>
         <div class="content-wrap">
-          <div style={{display: show ? 'block' : 'none' }}>
+          <div style={{display: show ? 'block' : 'none' }} className="eventContainer">
             <MenuComponent />
           </div>
           <div className="eventContainer" style={{display: !show ? 'flex' : 'none' }}>
@@ -33,7 +52,7 @@ const Container = () => {
               <ShoutboxComponent />
         </div>
         </div>
-        <ProgressBar />
+        <ProgressBar screen={show}/>
       </div>
     </div>
   )

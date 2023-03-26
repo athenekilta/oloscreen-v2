@@ -13,7 +13,8 @@ class SponsorComponent extends Component {
         setInterval(this.updateShouts, 5000);
     }
     updateShouts = () => {
-        const apiURL = `api/shoutbox/`;
+        //api/shoutbox/
+        const apiURL = `http://localhost:3001/shoutbox/`;
         let self = this;
         axios.get(apiURL).then(function (response) {
             self.setState({
@@ -28,7 +29,7 @@ class SponsorComponent extends Component {
             <div id="shouts">
                 <h1>HUUTOLOOTA</h1>
                 <h4>TG:
-                  <a target="_blank" href="https://t.me/oloscreenbot">
+                  <a target="_blank" href="https://t.me/oloscreenbot" style={{color: '#333333'}}>
                     @OloscreenBot
                   </a>
                 </h4>
