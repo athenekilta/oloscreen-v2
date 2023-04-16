@@ -58,7 +58,7 @@ class Countdown extends Component {
   };
 
   getEvents = () => {
-    const apiURL = `http://localhost:3001/api/hype/`;
+    const apiURL = `api/hype/`;
     let self = this;
     axios.get(apiURL).then(function (response) {
       self.setState({
