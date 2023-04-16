@@ -4,9 +4,6 @@ img {
     object-fit: cover;
 }
 
-.sponsor-img {
-    filter: brightness(0) invert(18%) sepia(0%) saturate(1347%) hue-rotate(173deg) brightness(97%) contrast(94%);
-}
   
   img:last-of-type {
     padding-left: 0;

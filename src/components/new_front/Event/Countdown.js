@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../App.css';
+import './countdown.css';
 import moment from 'moment';
 import Counter from './Counter';
 import axios from "axios";
@@ -58,7 +58,7 @@ class Countdown extends Component {
   };
 
   getEvents = () => {
-    const apiURL = `api/hype/`;
+    const apiURL = `http://localhost:3001/hype/`;
     let self = this;
     axios.get(apiURL).then(function (response) {
       self.setState({

@@ -1,0 +1,20 @@
+.padding-cont {
+    padding-top: 20rem;
+    z-index: 1;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .content-wrap {
+      justify-content: normal;
+    }
+  
+    .food-menu {
+      display: flex;
+      flex-direction: column;
+      min-width: 90%;
+    }
+    .padding-cont {
+      padding-top: 25rem;
+    }
+  }

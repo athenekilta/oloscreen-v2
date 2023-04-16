@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import './progress.css'
 
-const ProgressBar = ({screen}) => {
+const Progress = () => {
       return (
         <div className='progress' style={{position: 'fixed'}}>
           <div className='color'>
@@ -10,4 +10,4 @@ const ProgressBar = ({screen}) => {
       );
 }
 
-export default ProgressBar
+export default Progress
