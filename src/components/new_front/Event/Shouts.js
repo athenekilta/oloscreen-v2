@@ -5,7 +5,7 @@ const Shouts = () => {
     const [shouts, setShouts] = useState([])
 
     const getShouts = () => {
-        const apiURL = `http://localhost:3001/shoutbox/`;
+        const apiURL = `http://localhost:3001/api/shoutbox/`;
         axios.get(apiURL).then(function (response) {
             setShouts(response.data)
         });

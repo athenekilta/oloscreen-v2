@@ -10,7 +10,7 @@ const MenuComponent = () => {
     const [data, setData] = useState()
 
     const fetchData = () => {
-        const apiURL = "http://localhost:3001/restaurants/"
+        const apiURL = "http://localhost:3001/api/restaurants/"
         axios.get(apiURL).then((response) => {
             console.log(response.data)
             setData(response.data)

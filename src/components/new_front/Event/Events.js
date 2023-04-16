@@ -8,7 +8,7 @@ const Events = () => {
   const [events, setEvents] = useState([])
   
   const getEvents = () => {
-    const apiURL = `http://localhost:3001/calendar/`;
+    const apiURL = `http://localhost:3001/api/calendar/`;
     axios.get(apiURL).then(function (response) {
       setEvents(response.data)
     });
