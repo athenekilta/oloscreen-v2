@@ -1,0 +1,176 @@
+header {
+    display: flex;
+    color: #333;
+    gap: 2rem;
+  }
+  
+  .header {
+    position: fixed;
+    top: 0;
+    background-color: #5E8C64;
+  }
+  
+  .datetime {
+    display: flex;
+    font-size: 1em;
+  }
+  
+  .parag {
+    font-size: 12px;
+  }
+  
+  .appheadertime {
+    display: flex;
+    gap: 2em;
+    z-index: 100;
+    background: #5E8C64;
+    width: 100%;
+    height: 200px;
+    padding: 2rem;
+  }
+  .appheadertime2 {
+    display: none;
+  }
+  
+  .headerseparator {
+    width: 200px;
+    height: 188px;  
+  }
+  
+  header * {
+    margin: auto;
+    font-size: 1.5em;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  #timedate {
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: #FFFFFF !important;
+  }
+  
+  #daydate {
+    font-size: 1em;
+    display: flex;
+    gap: 0.5em;
+    color: #FFFFFF !important;
+  }
+  
+  #date {
+    font-size: 2em;
+    color: #FFFFFF !important;
+    font-weight: 700;
+  }
+  
+  #day {
+    font-size: 2em;
+  }
+  
+  #weeknumber {
+    font-size: 2em;
+    color: #FFFFFF;
+  }
+  
+  #timeclock {
+    font-size: 4em;
+    z-index: 100;
+    color: #FFFFFF !important;
+    max-width: 500px;
+    padding-right: 1rem;
+  }
+  
+  
+  .animate-fade-out {
+    animation-name: fade-out-keyframes;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+  }
+  
+  .animate-fade-in {
+    animation-name: fade-in-keyframes;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+  }
+  
+  .padding-cont {
+    padding-top: 15rem;
+    z-index: 1;
+  }
+  
+  @keyframes fade-out-keyframes {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fade-in-keyframes {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @media only screen and (max-width:1125px) {
+    #timedate { 
+      font-size: 0.6em
+    }
+    #timeclock {
+      font-size: 3em;
+    }
+  }
+  
+  @media only screen and (max-width: 700px) {
+  
+    Header {
+      display: flex;
+      }
+  
+    .appheadertime {
+      display: none;
+    }
+  
+    .paddingcont {
+      padding-top: 20rem;
+    }
+  
+    .appheadertime2 {
+      display: flex;
+      width: 100%;
+      font-size: 48px;
+      padding: 0.5rem;
+      flex-direction: column;
+      grid-gap: 0;
+      position: fixed;
+      top: 7rem;
+      background-color: #5E8C64;
+    }
+  
+    #timeclock {
+      font-size: 48px;
+      margin: 1rem;
+    }
+  
+    #day {
+      font-size: 24px;
+    }
+  
+    #date {
+      font-size: 24px;
+    }
+  
+    #timedate {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  

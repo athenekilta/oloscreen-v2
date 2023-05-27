@@ -1,0 +1,11 @@
+#shouts {
+  margin: 0 auto;
+  max-width: 500px;
+  border: 3px #5e8c64;
+  border-style: none none none solid;
+  padding: 1em;
+  margin: 1em;
+  width: 25vw;
+  text-align: left;
+  font-size: 1.2em;
+}
