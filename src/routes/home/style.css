@@ -18,6 +18,10 @@ body {
     sans-serif;
 }
 
+pre {
+	display: none;
+}
+
 h1 {
 	font-size: 48px;
 	color: #5E8C64;
