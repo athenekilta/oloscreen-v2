@@ -8,10 +8,8 @@ import get_logos
 from calendar_client import get_future_events, get_next_hype_event
 
 
-application = Flask(__name__, static_folder='../build')
+application = Flask(__name__, static_folder='../public')
 app = application
-
-# Serve React App
 
 
 @app.route('/', defaults={'path': ''})
@@ -23,9 +21,7 @@ def serve(path):
         return send_from_directory(app.static_folder, 'index.html')
 
 
-
 sodexo_id = '2'
-
 
 amica_url = "https://www.fazerfoodco.fi/modules/json/json/Index?costNumber=0199&language=fi"
 
@@ -66,7 +62,7 @@ def shoutbox():
         return jsonify([])
 
 @app.route('/calendar/')
-def calendar(): 
+def calendar():
     return jsonify(get_future_events())
 
 @app.route('/hype/')

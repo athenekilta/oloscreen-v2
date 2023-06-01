@@ -3,41 +3,66 @@
 
 <head>
   <meta charset="utf-8" />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="index.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <script async defer data-domain="oloscreen.athene.fi.kukka.digital" src="https://plausible.kukka.digital/js/plausible.js"></script>
-  <meta name="theme-color" content="#000000" />
-  <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-  <title>Oloscreen v2</title>
+  <script async defer data-domain="oloscreen.athene.fi.kukka.digital"
+    src="https://plausible.kukka.digital/js/plausible.js"></script>
+  <script src="index.js"></script>
+  <meta name="theme-color" content="#5e8c64" />
+  <title>Oloscreen</title>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+  <div id="root">
+    <header>
+      <div id="time"></div>
+      <div id="calendar">
+        <div>
+          <span id="day"></span>
+          <span id="date"></span>
+        </div>
+        <div>
+          <span>viikko</span>
+          <span id="week"></span>
+        </div>
+      </div>
+      <div id="logos">
+      </div>
+    </header>
+    <main>
+      <section id="restaurants">
+        <div id="sodexo">
+          <h2>T-talo</h2>
+          <div class="opening-hours"></div>
+          <div class="menu"></div>
+        </div>
+        <div id="abloc">
+          <h2>A Bloc</h2>
+          <div class="opening-hours"></div>
+          <div class="menu"></div>
+        </div>
+        <div id="tuas">
+          <h2>TUAS</h2>
+          <div class="opening-hours"></div>
+          <div class="menu"></div>
+        </div>
+      </section>
+      <section id="others">
+        <div id="events">
+          <h2>Tapahtumat</h2>
+          <div></div>
+        </div>
+        <div id="shoutbox">
+          <h2>Huutoloota</h2>
+          <div></div>
+        </div>
+      </section>
+    </main>
+    <div id="progress"></div>
+  </div>
 </body>
 
 </html>
