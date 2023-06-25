@@ -6,13 +6,7 @@ html {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  font-size: 1.8vw;
-}
-
-@media (max-width: 599px) {
-  html {
-    font-size: 16px;
-  }
+  font-size: max(16px, min(1.53vw, 2.72vh)); /* 1.53vw = 2.72vh = 29.376px at 1920 * 1080 px */
 }
 
 body {
@@ -30,8 +24,6 @@ body {
 
 #root {
   height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 header {
@@ -42,7 +34,7 @@ header {
   align-items: center;
   gap: .5em 2em;
   width: 100%;
-  padding: .5em 0;
+  height: 5em;
 }
 
 header #time {
@@ -88,6 +80,8 @@ header>div {
   header {
     flex-wrap: wrap-reverse;
     justify-content: center;
+    height: auto;
+    padding: .5rem 0;
   }
 
   header #time {
@@ -99,42 +93,17 @@ header>div {
   }
 }
 
-#progress {
-  height: 0.5rem;
-  width: 100%;
-  flex-shrink: 0;
-  margin-top: auto;
-  background-color: var(--green);
-  --n: 100%;
-  clip-path: inset(0 var(--n) 0 0);
-}
-
-#progress.animated {
-  --n: 0%;
-  transition: clip-path 5s linear;
+main {
+  display: flex;
+  grid-template-rows: 2fr 1fr;
+  justify-content: space-between;
+  flex-direction: column;
+  height: calc(100% - 5rem);
 }
 
 section {
-  padding: 1rem;
   display: grid;
-}
-
-@media (min-width: 600px) {
-  main {
-    flex-grow: 1;
-    display: flex;
-    overflow: hidden;
-    position: relative;
-  }
-
-  section {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    transition: opacity .5s ease-in-out;
-    opacity: 0;
-  }
+  padding: 1rem;
 }
 
 section.active {
@@ -149,26 +118,68 @@ section.active {
   grid-template-columns: 3fr 2fr;
 }
 
-@media screen and (max-width: 599px) {
+section > * {
+  display: inline-flex;
+  flex-direction: column;
+  max-height: 100%;
+  margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 699px) {
 
   #restaurants,
   #others {
     grid-template-columns: 1fr;
   }
 
-  #progress {
-    display: none;
+  #others > * {
+    max-height: 10.8rem; /* Calculated height of three calendar rows */
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .scrolling {
+    overflow: hidden;
   }
 
+  .scrolling .menu {
+    transition: opacity 500ms ease-in-out;
+  }
+
+  /*
+  .scrolling::after {
+    content: "";
+    display: block;
+    height: 1rem;
+    width: 100%;
+    position: absolute;
+    left: 0.1rem;
+    bottom: -0.5rem;
+    background: linear-gradient(180deg, rgba(244, 238, 231, 0) 0%, rgba(244, 238, 231, 1) 50%);
+  }
+  */
+
+  main > section {
+    overflow: hidden;
+  }
+
+  #others {
+    height: 10.8rem;
+    flex-shrink: 0;
+  }
 }
 
 
-main>section>div {
-  border-left: solid 0.1em var(--green);
-  padding: .5em;
-  height: min-content;
+main > section > div {
+  height: 100%;
   overflow: hidden;
-  margin-bottom: 1rem;
+  position: relative;
+  padding-right: .5rem;
+}
+
+main > section > div > * {
+  border-left: solid 0.1rem var(--green);
+  padding-left: .5rem;
 }
 
 h2 {
@@ -186,9 +197,14 @@ h3 {
 
 }
 
+.opening-hours {
+  padding-bottom: .5rem;
+}
+
 .opening-hours,
 .event .meta {
   font-size: .8rem;
+  font-weight: 300;
 }
 
 p {
@@ -207,7 +223,7 @@ p {
 }
 
 .event {
-  margin: .75em 0;
+  margin: .5em 0;
 }
 
 .event:last-of-type,
@@ -216,10 +232,39 @@ p {
   margin-bottom: 0;
 }
 
+.menu> :first-child {
+  margin-top: 0;
+}
+
+#shoutbox.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Apply a fade effect to the bottom of the container */
+#shoutbox {
+  position: relative;
+}
+#shoutbox::after {
+  content: "";
+  position: absolute;
+  top: 9.8rem; /* Maximum height 10.8rem - 1rem (height). No bottom: 0; because there may be less rows than the maximum */
+  left: 0.1rem;
+  width: 100%;
+  height: 1em;
+  background: linear-gradient(transparent, var(--background));
+}
+
 .event .description {
   font-size: .8rem;
   font-weight: 300;
   margin: 0;
+}
+
+.event .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .event .meta {

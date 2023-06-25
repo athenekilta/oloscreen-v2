@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return new Date().setHours(24, 0, 0, 0) - new Date()
   }
 
-  let sponsorLogos = async () => {
+  let loadSponsorLogos = async () => {
     // Fetch logos from API
     let links = await (await fetch('logo-links')).json()
     links.forEach((x) => {
@@ -68,6 +68,37 @@ document.addEventListener('DOMContentLoaded', async () => {
           x.style.transform = `translate3d(${-position}px,0,0)`
         } else if (x.style.visibility !== 'hidden') x.style.visibility = 'hidden'
       })
+
+      // Scroll elements with class "scrolling"
+      let scrollingElements = $$('.scrolling')
+      scrollingElements.forEach((el) => {
+        let animationStarted = el.dataset.animationStarted
+        let maxScroll = el.scrollHeight - el.offsetHeight
+        // Don't animate if element can't be scrolled
+        if (maxScroll <= 0) return
+        if (!animationStarted || animationStarted === '0') {
+
+          // Set animation start time
+          el.dataset.animationStarted = ms
+          el.scrollTop = 0
+
+        } else if (animationStarted > 0) {
+          // Animation takes 2 * delay + pixels / speed milliseconds 
+          let speed = 0.05
+          let delay = 2000
+          let animationDuration = 2 * (delay + maxScroll / speed)
+          let timeElapsed = (ms - animationStarted) % animationDuration
+          // One-liner to scroll element down, wait for 1000ms before changing direction, then scroll up
+          let scrollPosition =
+            timeElapsed < delay ? 0 :
+            timeElapsed < delay + maxScroll / speed ? (timeElapsed - delay) * speed :
+            timeElapsed < 2 * delay + maxScroll / speed ? maxScroll :
+            maxScroll - (timeElapsed - 2 * delay - maxScroll / speed) * speed
+          el.dataset.scrollPosition = scrollPosition
+          el.scrollTop = scrollPosition
+        }
+      })
+
       window.requestAnimationFrame(animation)
     }
     window.requestAnimationFrame(animation)
@@ -90,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     Object.entries(restaurants).forEach(([name, o]) => {
       let container = $(`#${name}`)
       let d = new Date()
-      container.querySelector('.opening-hours').innerText = o.openingHours[(d.getDay() + 6) % 7]
+      container.querySelector('.opening-hours').innerText = o.openingHours[(d.getDay() + 6) % 7] || 'suljettu'
       let categories = {}
       o.menus.forEach((x) => {
         let category = (x.title.match(/^(.+): /) || ['', ''])[1]
@@ -137,44 +168,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   let updateShoutbox = async () => {
-    let shoutbox = await (await fetch('shoutbox')).json()
+    let shoutbox = await (await fetch('/shoutbox/')).json()
     let container = $('#shoutbox > div')
     container.innerHTML = shoutbox.map((x) => {
       return `<p class="shout">${x}</p>`
-    }).join('')
-  }
-
-  let toggleSlides = async () => {
-    let slides = $$('main > section')
-    let progress = $('#progress')
-    progress.classList.remove('animated')
-    slides.forEach((x, i) => {
-      if (i !== active) x.classList.remove('active')
-      else {
-        window.setTimeout(() => {
-          x.classList.add('active')
-        }, 500)
-        if (x.id === 'others') {
-          updateShoutbox()
-        }
-      }
-      window.setTimeout(() => {
-        progress.classList.add('animated')
-      }, 1000)
-    })
-    active = (active + 1) % slides.length
-    window.setTimeout(toggleSlides, 6000)
+    }).reverse().join('')
+    window.setTimeout(updateShoutbox, 20000)
   }
 
 
-  // Update time and date every second
+
   timeAndDate()
   window.setInterval(timeAndDate, 1000)
-  sponsorLogos()
+
+  loadSponsorLogos()
   updateMenus()
   updateCalendar()
   updateShoutbox()
-  let active = 0;
-  toggleSlides()
-
 })
