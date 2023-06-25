@@ -18,10 +18,6 @@ def get_json(url):
 def restaurants():
     today = datetime.now()
     timestamp = today.strftime("%Y-%m-%d")
-    # Change the date for testing purposes
-    if timestamp == '2020-01-25':
-        today = datetime.now() + timedelta(days=-1)
-        timestamp = today.strftime("%Y-%m-%d")
     weekday = today.weekday()
 
     restaurant_ids = ','.join([sodexo_id, tuas_id, abloc_id])
