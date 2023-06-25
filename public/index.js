@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           // Remove allergens from properties for better readability
           let properties = y.properties.filter((x) => !x.match(/\+/))
           html += `<p class="${isLight ? 'light' : ''}">${x[0] ? y.title.slice(x[0].length + 2) : y.title}`
-          if (properties) html += `\n<span class="properties">${properties.join(' ')}</span>`
+          if (properties.length > 0) html += `\n<span class="properties">${properties.join(' ')}</span>`
           html += `</p>`
         })
         return html
