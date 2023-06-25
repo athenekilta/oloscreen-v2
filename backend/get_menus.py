@@ -2,13 +2,15 @@ from datetime import datetime, timedelta
 import requests
 from pprint import pprint
 
-sodexo_id = '2'
-tuas_id = '7'
-abloc_id = '52'
+RESTAURANTS = {
+    'sodexo': '2',
+    'tuas': '7',
+    'abloc': '52'
+}
 
-kanttiinit_url = 'https://kitchen.kanttiinit.fi/menus?lang=fi&restaurants={}&days={}/'
+KANTTIINIT_URL = 'https://kitchen.kanttiinit.fi/menus?lang=fi&restaurants={}&days={}/'
 
-kanttiinit_opening_hours = 'https://kitchen.kanttiinit.fi/restaurants?lang=fi&ids={}'
+KANTTIINIT_OPENING_HOURS = 'https://kitchen.kanttiinit.fi/restaurants?lang=fi&ids={}'
 
 
 def get_json(url):
@@ -17,20 +19,20 @@ def get_json(url):
 
 def restaurants():
     today = datetime.now()
-    timestamp = today.strftime("%Y-%m-%d")
+    date = today.strftime("%Y-%m-%d")
     weekday = today.weekday()
 
-    restaurant_ids = ','.join([sodexo_id, tuas_id, abloc_id])
-    all_menus = get_json(kanttiinit_url.format(restaurant_ids, timestamp))
+    restaurant_ids = ','.join(RESTAURANTS.values())
+    all_menus = get_json(KANTTIINIT_URL.format(restaurant_ids, date))
 
-    data = {"sodexo": {}, "tuas": {}, "abloc": {}}
+    data = {name: {'menus': [], 'openingHours': {}} for name in RESTAURANTS}
 
     def parse(name, id):
         data[name]['menus'] = all_menus[id].get(today.strftime("%Y-%m-%d"), [])
-        data[name]['openingHours'] =  get_json(kanttiinit_opening_hours.format(id))[0]['openingHours']
+        data[name]['openingHours'] =  get_json(KANTTIINIT_OPENING_HOURS.format(id))[0]['openingHours']
 
-    for item in [('sodexo', sodexo_id), ('tuas', tuas_id), ('abloc', abloc_id)]:
-        parse(*item)
+    for name, id in RESTAURANTS.items():
+        parse(name, id)
 
     def filter_foods(restaurant, keyword):
         data[restaurant]['menus'] = [x for x in data[restaurant]['menus'] if not x['title'].startswith(keyword) ]
@@ -45,6 +47,6 @@ def restaurants():
     return data
 
 if __name__ == "__main__":
-    pprint(restaurants())
     data = restaurants()
+    pprint(data)
     pprint(data['tuas'])
