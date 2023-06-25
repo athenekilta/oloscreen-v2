@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let loadSponsorLogos = async () => {
     // Fetch logos from API
-    let links = await (await fetch('logo-links')).json()
+    let links = await (await fetch('logo-links/')).json()
     links.forEach((x) => {
       let img = document.createElement('img')
       img.src = x
@@ -117,65 +117,79 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Load restaurant menus
   let updateMenus = async () => {
-    let restaurants = await (await fetch('restaurants')).json()
-    Object.entries(restaurants).forEach(([name, o]) => {
-      let container = $(`#${name}`)
-      let d = new Date()
-      container.querySelector('.opening-hours').innerText = o.openingHours[(d.getDay() + 6) % 7] || 'suljettu'
-      let categories = {}
-      o.menus.forEach((x) => {
-        let category = (x.title.match(/^(.+): /) || ['', ''])[1]
-        if (!categories[category]) categories[category] = []
-        categories[category].push(x)
-      })
-
-      container.querySelector('.menu').innerHTML = Object.entries(categories).map((x) => {
-        let html = ''
-        if (x[0] !== '') html += `<h3>${x[0]}</h3>`
-        x[1].forEach((y) => {
-          let isLight = x[0] !== ''
-          // Remove allergens from properties for better readability
-          let properties = y.properties.filter((x) => !x.match(/\+/))
-          html += `<p class="${isLight ? 'light' : ''}">${x[0] ? y.title.slice(x[0].length + 2) : y.title}`
-          if (properties.length > 0) html += `\n<span class="properties">${properties.join(' ')}</span>`
-          html += `</p>`
+    try {
+      let restaurants = await (await fetch('restaurants/')).json()
+      Object.entries(restaurants).forEach(([name, o]) => {
+        let container = $(`#${name}`)
+        let d = new Date()
+        container.querySelector('.opening-hours').innerText = o.openingHours[(d.getDay() + 6) % 7] || 'suljettu'
+        let categories = {}
+        o.menus.forEach((x) => {
+          let category = (x.title.match(/^(.+): /) || ['', ''])[1]
+          if (!categories[category]) categories[category] = []
+          categories[category].push(x)
         })
-        return html
-      }).join('')
-    })
-    // Update menus every 4 hours and at midnight
-    window.setTimeout(updateMenus, Math.min(midnight(), 14400000))
+  
+        container.querySelector('.menu').innerHTML = Object.entries(categories).map((x) => {
+          let html = ''
+          if (x[0] !== '') html += `<h3>${x[0]}</h3>`
+          x[1].forEach((y) => {
+            let isLight = x[0] !== ''
+            // Remove allergens from properties for better readability
+            let properties = y.properties.filter((x) => !x.match(/\+/))
+            html += `<p class="${isLight ? 'light' : ''}">${x[0] ? y.title.slice(x[0].length + 2) : y.title}`
+            if (properties.length > 0) html += `\n<span class="properties">${properties.join(' ')}</span>`
+            html += `</p>`
+          })
+          return html
+        }).join('')
+      })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      // Update menus every 4 hours and at midnight
+      window.setTimeout(updateMenus, Math.min(midnight(), 4 * 60 * 60 * 1000))
+    }
   }
 
   let updateCalendar = async () => {
-    let calendar = await (await fetch('calendar')).json()
-    let container = $('#events > div')
-    container.innerHTML = calendar.map((x) => {
-      let d = new Date(x.startdt)
-      let date = d.toLocaleDateString('fi-FI', { month: 'numeric', weekday: 'short', day: 'numeric' })
-      let time = d.getUTCHours() === 0 && d.getUTCMinutes() === 0 ? '' :
-        `klo ${d.toLocaleTimeString('fi-FI', { hour: 'numeric', minute: '2-digit' })}`
-      let dateTime = `${date} ${time}`
-      let location = x.location ? `@ ${x.location}` : ''
-      let description = x.description ? `<div class="description">${x.description}</div>` : ''
-      return `<div class="event">
-        <div class="meta">${dateTime} ${location}</div>
-        <div class="title">${x.summary}</div>
-        ${description}
-      </div>`
-    }).join('')
-    window.setTimeout(updateCalendar, midnight())
+    try {
+      let calendar = await (await fetch('calendar/')).json()
+      let container = $('#events > div')
+      container.innerHTML = calendar.map((x) => {
+        let d = new Date(x.startdt)
+        let date = d.toLocaleDateString('fi-FI', { month: 'numeric', weekday: 'short', day: 'numeric' })
+        let time = d.getUTCHours() === 0 && d.getUTCMinutes() === 0 ? '' :
+          `klo ${d.toLocaleTimeString('fi-FI', { hour: 'numeric', minute: '2-digit' })}`
+        let dateTime = `${date} ${time}`
+        let location = x.location ? `@ ${x.location}` : ''
+        let description = x.description ? `<div class="description">${x.description}</div>` : ''
+        return `<div class="event">
+          <div class="meta">${dateTime} ${location}</div>
+          <div class="title">${x.summary}</div>
+          ${description}
+        </div>`
+      }).join('')
+    } catch (error) {
+      console.error(error)
+    } finally {
+      window.setTimeout(updateCalendar, midnight())
+    }
   }
 
   let updateShoutbox = async () => {
-    let shoutbox = await (await fetch('/shoutbox/')).json()
-    let container = $('#shoutbox > div')
-    container.innerHTML = shoutbox.map((x) => {
-      return `<p class="shout">${x}</p>`
-    }).reverse().join('')
+    try {
+      let shoutbox = await (await fetch('shoutbox/')).json()
+      let container = $('#shoutbox > div')
+      container.innerHTML = shoutbox.map((x) => {
+        return `<p class="shout">${x}</p>`
+      }).reverse().join('')
+    } catch (error) {
+      console.error(error)
+    } finally {
     window.setTimeout(updateShoutbox, 20000)
+    }
   }
-
 
 
   timeAndDate()
