@@ -49,4 +49,3 @@ def restaurants():
 if __name__ == "__main__":
     data = restaurants()
     pprint(data)
-    pprint(data['tuas'])
