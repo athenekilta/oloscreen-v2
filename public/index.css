@@ -191,10 +191,10 @@ h2 {
 
 h3 {
   font-weight: 400;
-  font-size: 1em;
-  margin: .5em 0;
-  margin-bottom: 0;
-
+  font-size: .8em;
+  text-transform: uppercase;
+  margin: 0;
+  margin-top: .75rem;
 }
 
 .opening-hours {
@@ -232,6 +232,7 @@ p {
   margin-bottom: 0;
 }
 
+
 .menu> :first-child {
   margin-top: 0;
 }
@@ -244,6 +245,7 @@ p {
 /* Apply a fade effect to the bottom of the container */
 #shoutbox {
   position: relative;
+  font-weight: 300;
 }
 #shoutbox::after {
   content: "";

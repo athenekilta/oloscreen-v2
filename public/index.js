@@ -129,20 +129,26 @@ document.addEventListener('DOMContentLoaded', async () => {
           if (!categories[category]) categories[category] = []
           categories[category].push(x)
         })
+        console.log(categories)
   
-        container.querySelector('.menu').innerHTML = Object.entries(categories).map((x) => {
-          let html = ''
-          if (x[0] !== '') html += `<h3>${x[0]}</h3>`
+        let html = ''
+        Object.entries(categories).map((x) => {
+          let allowGrouping = x[1].length > 1 && x[0] !== ''
+          if (allowGrouping) html += `<h3>${x[0]}</h3>`
           x[1].forEach((y) => {
-            let isLight = x[0] !== ''
             // Remove allergens from properties for better readability
             let properties = y.properties.filter((x) => !x.match(/\+/))
-            html += `<p class="${isLight ? 'light' : ''}">${x[0] ? y.title.slice(x[0].length + 2) : y.title}`
+            if (allowGrouping){
+              html += `<p class="light">${ y.title.slice(x[0].length + 2) }`
+            } else {
+              html += `<p class="light">${ y.title }`
+            }
             if (properties.length > 0) html += `\n<span class="properties">${properties.join(' ')}</span>`
             html += `</p>`
           })
-          return html
-        }).join('')
+        })
+        container.querySelector('.menu').innerHTML = html
+
       })
     } catch (error) {
       console.error(error)
