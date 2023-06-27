@@ -78,7 +78,7 @@ header>div {
 
 @media (max-width: 499px) {
   header {
-    flex-wrap: wrap-reverse;
+    flex-wrap: wrap;
     justify-content: center;
     height: auto;
     padding: .5rem 0;
