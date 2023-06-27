@@ -82,20 +82,47 @@ document.addEventListener('DOMContentLoaded', async () => {
           el.dataset.animationStarted = ms
           el.scrollTop = 0
 
-        } else if (animationStarted > 0) {
+        } else if(animationStarted > 0) {
           // Animation takes 2 * delay + pixels / speed milliseconds 
           let speed = 0.05
           let delay = 2000
-          let animationDuration = 2 * (delay + maxScroll / speed)
-          let timeElapsed = (ms - animationStarted) % animationDuration
-          // One-liner to scroll element down, wait for 1000ms before changing direction, then scroll up
-          let scrollPosition =
-            timeElapsed < delay ? 0 :
-            timeElapsed < delay + maxScroll / speed ? (timeElapsed - delay) * speed :
-            timeElapsed < 2 * delay + maxScroll / speed ? maxScroll :
-            maxScroll - (timeElapsed - 2 * delay - maxScroll / speed) * speed
-          el.dataset.scrollPosition = scrollPosition
-          el.scrollTop = scrollPosition
+          let duration = maxScroll / speed
+          let timeElapsed = (ms - animationStarted) % (2 * (delay + duration))
+          let animationTime = timeElapsed < delay ? 0 :
+            timeElapsed < delay + duration ? timeElapsed - delay :
+            timeElapsed < 2 * delay + duration ? duration :
+            2 * (delay + duration) - timeElapsed
+
+            // nicely broken
+            // let quadraticEaseInOut = (t, duration, maxScroll, maxAccelTime) => {
+            //   let accelTime = Math.min(duration / 2, maxAccelTime)
+            //   let accelDistance = accelTime / duration * maxScroll
+            //   let accel = accelDistance / accelTime
+            //   // Calculate required velocity to reach maxScroll / 2 in duration / 2 - accelTime
+            //   if ((maxScroll / 2 - accelDistance) < 0) throw new Error('maxScroll too smol')
+            //   let maxVelocity = (maxScroll / 2 - accelDistance) / (duration / 2 - accelTime)
+            //   if (t < accelTime) return accel * t ** 2 / 2
+            //   else if (t <= duration / 2) return maxVelocity * (t - accelTime) + accelDistance
+            //   else return maxScroll - quadraticEaseInOut(duration - t, duration, maxScroll, maxAccelTime)
+            // }
+
+          const quadraticEaseInOut = (t, duration, maxScroll, maxAccelTime) => {
+            let Ta = Math.min(duration / 2, maxAccelTime)
+            let a = maxScroll / (2 * Ta * (duration - Ta))
+            let linearVelocity = 2 * a * Ta
+            let accelDistance = a * Ta ** 2
+
+            if (t < Ta) return a * t ** 2
+            else if (t <= duration / 2) return linearVelocity * (t - Ta) + accelDistance
+            else return maxScroll - quadraticEaseInOut(duration - t, duration, maxScroll, maxAccelTime)
+          }
+
+          // Use quadratic easing function
+          el.scrollTop = quadraticEaseInOut(animationTime, duration, maxScroll, 1000)
+          s = ""
+          for (let i = 0; i < el.scrollTop / maxScroll * 50; i++) {
+            s += "#"
+          }
         }
       })
 
@@ -129,20 +156,28 @@ document.addEventListener('DOMContentLoaded', async () => {
           if (!categories[category]) categories[category] = []
           categories[category].push(x)
         })
-        console.log(categories)
   
         let html = ''
+        
+        // Map through categories and their items
         Object.entries(categories).map((x) => {
           let allowGrouping = x[1].length > 1 && x[0] !== ''
-          if (allowGrouping) html += `<h3>${x[0]}</h3>`
+          if (allowGrouping) {
+            // Add category title if grouping is allowed
+            html += `<h3>${x[0]}</h3>`
+          }
+          // Loop through items in category
           x[1].forEach((y) => {
             // Remove allergens from properties for better readability
             let properties = y.properties.filter((x) => !x.match(/\+/))
-            if (allowGrouping){
+            if (allowGrouping) {
+              // Add item title without category if grouping is allowed
               html += `<p class="light">${ y.title.slice(x[0].length + 2) }`
             } else {
+              // Add item title with category if grouping is not allowed
               html += `<p class="light">${ y.title }`
             }
+            // Add properties (special diets) if they exist
             if (properties.length > 0) html += `\n<span class="properties">${properties.join(' ')}</span>`
             html += `</p>`
           })
@@ -158,30 +193,55 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  let formatDate = (date) => {
+    return date.toLocaleDateString('fi-FI', { month: 'numeric', weekday: 'short', day: 'numeric' })
+  }
+
+  let formatTime = (date) => {
+    return date.getUTCHours() === 0 && date.getUTCMinutes() === 0 ? '' :
+      `klo ${date.toLocaleTimeString('fi-FI', { hour: 'numeric', minute: '2-digit' })}`
+  }
+
+  let formatDateTime = (date) => {
+    return `${formatDate(date)} ${formatTime(date)}`
+  }
+
+  let formatEvent = (event) => {
+    let date = new Date(event.startdt)
+    let dateTime = formatDateTime(date)
+    let location = event.location ? `@ ${event.location}` : ''
+    let description = event.description ? `<div class="description">${event.description}</div>` : ''
+    return `<div class="event">
+      <div class="meta">${dateTime} ${location}</div>
+      <div class="title">${event.summary}</div>
+      ${description}
+    </div>`
+  }
+
   let updateCalendar = async () => {
     try {
       let calendar = await (await fetch('calendar/')).json()
       let container = $('#events > div')
-      container.innerHTML = calendar.map((x) => {
-        let d = new Date(x.startdt)
-        let date = d.toLocaleDateString('fi-FI', { month: 'numeric', weekday: 'short', day: 'numeric' })
-        let time = d.getUTCHours() === 0 && d.getUTCMinutes() === 0 ? '' :
-          `klo ${d.toLocaleTimeString('fi-FI', { hour: 'numeric', minute: '2-digit' })}`
-        let dateTime = `${date} ${time}`
-        let location = x.location ? `@ ${x.location}` : ''
-        let description = x.description ? `<div class="description">${x.description}</div>` : ''
-        return `<div class="event">
-          <div class="meta">${dateTime} ${location}</div>
-          <div class="title">${x.summary}</div>
-          ${description}
-        </div>`
-      }).join('')
+      container.innerHTML = calendar.map(formatEvent).join('')
     } catch (error) {
       console.error(error)
     } finally {
       window.setTimeout(updateCalendar, midnight())
     }
   }
+
+  // Iterate over all .placeholder elements and randomize their width
+  let placeholderRandomizer = () => {
+    [
+      { s: '.placeholder.meta', width: 4 },
+      { s: '.placeholder.title', width: 10 }
+    ].forEach(({ s, width }) => {
+      $$(s).forEach((x) => {
+        x.style.width = `${width + Math.random() * (width / 2)}rem`
+      })
+    })
+  }
+
 
   let updateShoutbox = async () => {
     try {
@@ -197,12 +257,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  function ProgressBar(maxProgress, tag = '#progress-bar') {
+    this.maxProgress = maxProgress;
+    this.progress = 0;
+    console.log(this)
+    this.addEventListener('progress', (function ({ detail: { progress }}) {
+      this.progress += progress;
+      $(tag).style.setProperty('--n', `${this.progress / (this.maxProgress) * 100}%`);
+    }));
+    return this;
+  }
 
+  const progressWrapper = async (progressBar, promise, progress) => {
+    const result = await promise;
+    console.log(result)
+    progressBar.dispatchEvent(new CustomEvent('progress', { detail: { progress } }));
+    return result;
+  };
+  
+
+  const progressBar = ProgressBar.call(new EventTarget(), 4);
+  
   timeAndDate()
   window.setInterval(timeAndDate, 1000)
-
-  loadSponsorLogos()
-  updateMenus()
+  placeholderRandomizer()
   updateCalendar()
-  updateShoutbox()
+  await Promise.all([
+    [async () => {}, 1],
+    [loadSponsorLogos().then(() => Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; })))), 1],
+    [updateMenus(), 1],
+    [updateShoutbox(), 1],
+  ].map(([p, pp]) => progressWrapper(progressBar, p, pp)));
+  
+  // Add class to body when everything is loaded
+  document.body.classList.add('loaded')
 })
