@@ -278,7 +278,7 @@ p {
 #splash {
   background: var(--green);
   color: white;
-  position: absolute;
+  position: fixed;
   height: 100%;
   width: 100%;
   transition: transform 1s ease-in-out;
@@ -313,6 +313,10 @@ body.loaded main {
   transform: scale3d(1, 1, 1);
 }
 
+body:not(.loaded) {
+  overflow: hidden;
+}
+
 body.loaded #progress-bar {
   opacity: 0;
   transition: clip-path 0.5s ease-out, opacity 0.5s ease-in;
@@ -339,12 +343,12 @@ h1 {
 #progress-bar {
   opacity: 1;
   --n: 0%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 101;
   width: 100%;
-  height: 2px;
+  height: .1rem;
   font-size: 0.75rem;
   background: #fff;
   clip-path: inset(0 calc(100% - var(--n)) 0 0);
@@ -362,17 +366,19 @@ h1 {
 }
 
 .event .placeholder {
-  background: #dbd6d0;
-  border-radius: 0.2rem;
   width: 10rem;
   max-width: 100%;
+  position: relative;
+  color: transparent;
 }
 
-.event .placeholder.meta {
-  height: 1.0rem;
-}
-
-.event .placeholder.title {
-  margin-top: 0.2rem;
-  height: 1.3rem;
+.event .placeholder > div {
+  background: #dbd6d0;
+  border-radius: 0.2rem;
+  width: 100%;
+  position: absolute;
+  height: 90%;
+  width: 100%;
+  top: 10%;
+  left: 0;
 }

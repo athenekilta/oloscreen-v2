@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   placeholderRandomizer()
   updateCalendar()
   await Promise.all([
-    [async () => {}, 1],
+    [new Promise(resolve => setTimeout(resolve, 500)), 1],
     [loadSponsorLogos().then(() => Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; })))), 1],
     [updateMenus(), 1],
     [updateShoutbox(), 1],
