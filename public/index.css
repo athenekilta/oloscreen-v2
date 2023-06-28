@@ -76,7 +76,7 @@ header>div {
   object-fit: contain;
 }
 
-@media (max-width: 499px) {
+@media screen and (max-width: 499px) {
   header {
     flex-wrap: wrap;
     justify-content: center;
@@ -125,7 +125,7 @@ section > * {
   margin-bottom: 1rem;
 }
 
-@media screen and (max-width: 699px) {
+@media screen and ((max-width: 699px) or (max-height: 599px)) {
 
   #restaurants,
   #others {
@@ -137,7 +137,7 @@ section > * {
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and ((min-width: 700px) and (min-height: 600px)) {
   .scrolling {
     overflow: hidden;
   }
@@ -145,19 +145,6 @@ section > * {
   .scrolling .menu {
     transition: opacity 500ms ease-in-out;
   }
-
-  /*
-  .scrolling::after {
-    content: "";
-    display: block;
-    height: 1rem;
-    width: 100%;
-    position: absolute;
-    left: 0.1rem;
-    bottom: -0.5rem;
-    background: linear-gradient(180deg, rgba(244, 238, 231, 0) 0%, rgba(244, 238, 231, 1) 50%);
-  }
-  */
 
   main > section {
     overflow: hidden;
