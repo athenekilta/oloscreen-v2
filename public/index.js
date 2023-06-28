@@ -254,8 +254,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return result;
   };
   
-
-  const progressBar = ProgressBar.call(new EventTarget(), 4);
+  const progressBar = ProgressBar.call(new EventTarget(), 3.2);
   
   timeAndDate()
   window.setInterval(timeAndDate, 1000)
