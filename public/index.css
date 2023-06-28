@@ -319,7 +319,7 @@ body:not(.loaded) {
 
 body.loaded #progress-bar {
   opacity: 0;
-  transition: clip-path 0.5s ease-out, opacity 0.5s ease-in;
+  transition: clip-path 0.5s linear, opacity 0.7s ease-in;
 }
 
 svg#logo {
@@ -353,6 +353,10 @@ h1 {
   background: #fff;
   clip-path: inset(0 calc(100% - var(--n)) 0 0);
   transition: clip-path 5s cubic-bezier(.19,1,.22,1);
+}
+
+#error {
+  padding: 2em;
 }
 
 

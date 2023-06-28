@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
     } catch (error) {
       console.error(error)
+      return error
     } finally {
       // Update menus every 4 hours and at midnight
       window.setTimeout(updateMenus, Math.min(midnight(), 4 * 60 * 60 * 1000))
@@ -225,6 +226,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       container.innerHTML = calendar.map(formatEvent).join('')
     } catch (error) {
       console.error(error)
+      return error
     } finally {
       window.setTimeout(updateCalendar, midnight())
     }
@@ -252,15 +254,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       }).reverse().join('')
     } catch (error) {
       console.error(error)
+      return error
     } finally {
-    window.setTimeout(updateShoutbox, 20000)
+      window.setTimeout(updateShoutbox, 20000)
     }
   }
 
   function ProgressBar(maxProgress, tag = '#progress-bar') {
     this.maxProgress = maxProgress;
     this.progress = 0;
-    console.log(this)
     this.addEventListener('progress', (function ({ detail: { progress }}) {
       this.progress += progress;
       $(tag).style.setProperty('--n', `${this.progress / (this.maxProgress) * 100}%`);
@@ -270,7 +272,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const progressWrapper = async (progressBar, promise, progress) => {
     const result = await promise;
-    console.log(result)
+    if (result instanceof Error) {
+      // Show the error
+      $('#error').innerText = result.message;
+      // Hide the progress bar
+      $('#progress-bar').style.display = 'none';
+      // Throw the error to stop the execution
+      throw result;
+    }
     progressBar.dispatchEvent(new CustomEvent('progress', { detail: { progress } }));
     return result;
   };
@@ -284,7 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateCalendar()
   await Promise.all([
     [new Promise(resolve => setTimeout(resolve, 500)), 1],
-    [loadSponsorLogos().then(() => Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; })))), 1],
+    [loadSponsorLogos().then(() => Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; })))).catch(e => e ), 1],
     [updateMenus(), 1],
     [updateShoutbox(), 1],
   ].map(([p, pp]) => progressWrapper(progressBar, p, pp)));
