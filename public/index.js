@@ -276,14 +276,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   timeAndDate()
   window.setInterval(timeAndDate, 1000)
-  placeholderRandomizer()
-  updateCalendar()
   await Promise.all([
     [new Promise(resolve => setTimeout(resolve, 500)), 1],
     [loadSponsorLogos().then(() => Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; })))).catch(e => e ), 1],
     [updateMenus(), 1],
     [updateShoutbox(), 1],
   ].map(([p, pp]) => progressWrapper(progressBar, p, pp)));
+  placeholderRandomizer()
+  // Load calendar after everything else to reduce load on the server
+  updateCalendar()
   
   // Add class to body when everything is loaded
   document.body.classList.add('loaded')
