@@ -76,7 +76,7 @@ header>div {
   object-fit: contain;
 }
 
-@media screen and (max-width: 499px) {
+@media screen and (max-width: 599px) {
   header {
     flex-wrap: wrap;
     justify-content: center;

@@ -42,25 +42,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     let container = $('#logos')
     let logos = $$('#logos img')
 
-    // Hide logos on resize to prevent erratic movement
-    let fadeTimeout;
-    window.addEventListener('resize', () => {
-      window.clearTimeout(fadeTimeout)
-      container.classList.remove('fade-in')
-      container.style.opacity = 0
-      fadeTimeout = window.setTimeout(() => {
-        container.classList.add('fade-in')
-        container.style.opacity = 1
-      }, 200)
-    })
-
-
     // Scroll logos
     let animation = (ms) => {
       let containerSize = container.offsetWidth
       logos.forEach((x, i) => {
         let elementWidth = x.offsetWidth * 1.25
-        let position = (ms * 0.00005 * window.innerWidth + (logos.length - i) * elementWidth) %
+        let position = (ms * 0.0005 * elementWidth + (logos.length - i) * elementWidth) %
           (elementWidth * logos.length) - elementWidth
         if (position < containerSize) {
           if (x.style.visibility === 'hidden') x.style.visibility = 'visible'
