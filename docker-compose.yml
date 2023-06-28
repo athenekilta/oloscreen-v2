@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   oloscreen_backend:
-    container_name: oloscreen
+    container_name: oloscreen_backend
     env_file:
       - .env
     build:
