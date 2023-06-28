@@ -106,10 +106,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           // Use quadratic easing function
           el.scrollTop = quadraticEaseInOut(animationTime, duration, maxScroll, 1000)
-          s = ""
-          for (let i = 0; i < el.scrollTop / maxScroll * 50; i++) {
-            s += "#"
-          }
         }
       })
 
