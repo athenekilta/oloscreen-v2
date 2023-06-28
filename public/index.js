@@ -140,13 +140,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           x[1].forEach((y) => {
             // Remove allergens from properties for better readability
             let properties = y.properties.filter((x) => !x.match(/\+/))
-            if (allowGrouping) {
-              // Add item title without category if grouping is allowed
-              html += `<p class="light">${ y.title.slice(x[0].length + 2) }`
-            } else {
-              // Add item title with category if grouping is not allowed
-              html += `<p class="light">${ y.title }`
-            }
+            // Add item title
+            html += `<p>${ allowGrouping ? y.title.slice(x[0].length + 2) : y.title }`
             // Add properties (special diets) if they exist
             if (properties.length > 0) html += `\n<span class="properties">${properties.join(' ')}</span>`
             html += `</p>`
