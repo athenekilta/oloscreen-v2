@@ -352,7 +352,7 @@ h1 {
   font-size: 0.75rem;
   background: #fff;
   clip-path: inset(0 calc(100% - var(--n)) 0 0);
-  transition: clip-path 5s cubic-bezier(.19,1,.22,1);
+  transition: clip-path 10s cubic-bezier(.19,1,.22,1);
 }
 
 #error {
