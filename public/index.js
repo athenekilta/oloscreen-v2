@@ -254,7 +254,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   timeAndDate()
   window.setInterval(timeAndDate, 1000)
   await Promise.all([
+    // Advance the progress bar after 500ms to let the browser render the page before starting the animation
     [new Promise(resolve => setTimeout(resolve, 500)), 1],
+    // Load sponsor logos and wait until the images are loaded
     [loadSponsorLogos().then(() => Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; })))).catch(e => e ), 1],
     [updateMenus(), 1],
     [updateShoutbox(), 1],
