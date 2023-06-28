@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
     } catch (error) {
       console.error(error)
-      return error
+      return new Error('Failed to load menus')
     } finally {
       // Update menus every 4 hours and at midnight
       window.setTimeout(updateMenus, Math.min(midnight(), 4 * 60 * 60 * 1000))
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       container.innerHTML = calendar.map(formatEvent).join('')
     } catch (error) {
       console.error(error)
-      return error
+      return new Error('Failed to load calendar')
     } finally {
       window.setTimeout(updateCalendar, midnight())
     }
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }).reverse().join('')
     } catch (error) {
       console.error(error)
-      return error
+      return new Error('Failed to load shoutbox')
     } finally {
       window.setTimeout(updateShoutbox, 20000)
     }
