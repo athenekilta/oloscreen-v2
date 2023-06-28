@@ -93,19 +93,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             timeElapsed < 2 * delay + duration ? duration :
             2 * (delay + duration) - timeElapsed
 
-            // nicely broken
-            // let quadraticEaseInOut = (t, duration, maxScroll, maxAccelTime) => {
-            //   let accelTime = Math.min(duration / 2, maxAccelTime)
-            //   let accelDistance = accelTime / duration * maxScroll
-            //   let accel = accelDistance / accelTime
-            //   // Calculate required velocity to reach maxScroll / 2 in duration / 2 - accelTime
-            //   if ((maxScroll / 2 - accelDistance) < 0) throw new Error('maxScroll too smol')
-            //   let maxVelocity = (maxScroll / 2 - accelDistance) / (duration / 2 - accelTime)
-            //   if (t < accelTime) return accel * t ** 2 / 2
-            //   else if (t <= duration / 2) return maxVelocity * (t - accelTime) + accelDistance
-            //   else return maxScroll - quadraticEaseInOut(duration - t, duration, maxScroll, maxAccelTime)
-            // }
-
           const quadraticEaseInOut = (t, duration, maxScroll, maxAccelTime) => {
             let Ta = Math.min(duration / 2, maxAccelTime)
             let a = maxScroll / (2 * Ta * (duration - Ta))
