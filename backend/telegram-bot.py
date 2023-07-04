@@ -1,7 +1,7 @@
 import telegram
 import files
 import requests
-from telegram.error import NetworkError, Unauthorized, RetryAfter
+from telegram.error import NetworkError, Unauthorized, RetryAfter, Conflict
 from time import sleep
 
 bot_name = "oloscreenbot"
@@ -43,6 +43,10 @@ def main():
             sleep(60)
         except RetryAfter as e:
             sleep(e.retry_after)
+        except Conflict as e:
+            print(e)
+            sleep(60)
+
         
 
 
