@@ -1,7 +1,7 @@
 import telegram
 import files
 import requests
-from telegram.error import NetworkError, Unauthorized
+from telegram.error import NetworkError, Unauthorized, RetryAfter
 from time import sleep
 
 bot_name = "oloscreenbot"
@@ -40,7 +40,10 @@ def main():
             # The user has removed or blocked the bot.
             update_id += 1
         except NetworkError:
-            sleep(10)
+            sleep(60)
+        except RetryAfter as e:
+            sleep(e.retry_after)
+        
 
 
 if __name__ == "__main__":
