@@ -116,10 +116,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   let updateMenus = async () => {
     try {
       let restaurants = await (await fetch('restaurants/')).json()
+
+      // Loop through each restaurant and update their opening hours
       Object.entries(restaurants).forEach(([name, o]) => {
         let container = $(`#${name}`)
         let d = new Date()
+        // Get the opening hours for the current day and update the container
         container.querySelector('.opening-hours').innerText = o.openingHours[(d.getDay() + 6) % 7] || 'suljettu'
+
+        // Group menu items by category
         let categories = {}
         o.menus.forEach((x) => {
           let category = (x.title.match(/^(.+): /) || ['', ''])[1]
