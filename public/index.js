@@ -236,6 +236,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     this.addEventListener('progress', (function ({ detail: { progress }}) {
       this.progress += progress;
       $(tag).style.setProperty('--n', `${this.progress / (this.maxProgress) * 100}%`);
+      // Remove the loading splash if the progress bar is full
+      if (this.progress >= this.maxProgress) {
+        document.body.classList.add('loaded');
+      }
     }));
     return this;
   }
@@ -247,10 +251,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       $('#error').innerText = result.message;
       // Hide the progress bar
       $('#progress-bar').style.display = 'none';
-      // Throw the error to stop the execution
-      throw result;
+      // Reload the page after 60 seconds
+      window.setTimeout(() => window.location.reload(), 60000);
     }
-    progressBar.dispatchEvent(new CustomEvent('progress', { detail: { progress } }));
+    else {
+      progressBar.dispatchEvent(new CustomEvent('progress', { detail: { progress } }));
+    }
     return result;
   };
   
@@ -269,7 +275,4 @@ document.addEventListener('DOMContentLoaded', async () => {
   placeholderRandomizer()
   // Load calendar after everything else to reduce load on the server
   updateCalendar()
-  
-  // Add class to body when everything is loaded
-  document.body.classList.add('loaded')
 })
