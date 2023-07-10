@@ -6,7 +6,8 @@ from datetime import datetime
 
 def get_brightness():
     url = "https://www.athene.fi/olocam/latest.jpg"
-    img = Image.open(requests.get(url, stream=True).raw)
+    basic = requests.auth.HTTPBasicAuth('', '')
+    img = Image.open(requests.get(url, stream=True, auth=basic).raw)
     brightness = ImageStat.Stat(img).mean[0]
     return brightness
 
