@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         // Map through categories and their items
         Object.entries(categories).map((x) => {
-          let allowGrouping = x[1].length > 1 && x[0] !== ''
+          let allowGrouping = x[0] !== ''
           if (allowGrouping) {
             // Add category title if grouping is allowed
             html += `<h3>${x[0]}</h3>`
