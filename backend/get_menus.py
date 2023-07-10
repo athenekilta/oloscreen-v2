@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import requests
 from pprint import pprint
+from zoneinfo import ZoneInfo
 
 RESTAURANTS = {
     'sodexo': '2',
@@ -18,7 +19,7 @@ def get_json(url):
 
 
 def restaurants():
-    today = datetime.now()
+    today = datetime.now(ZoneInfo("Europe/Helsinki"))
     date = today.strftime("%Y-%m-%d")
     weekday = today.weekday()
 
