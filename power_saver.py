@@ -7,9 +7,12 @@ from datetime import datetime
 def get_brightness():
     url = "https://www.athene.fi/olocam/latest.jpg"
     basic = requests.auth.HTTPBasicAuth('', '')
-    img = Image.open(requests.get(url, stream=True, auth=basic).raw)
-    brightness = ImageStat.Stat(img).mean[0]
-    return brightness
+    try:
+        img = Image.open(requests.get(url, stream=True, auth=basic).raw)
+        brightness = ImageStat.Stat(img).mean[0]
+        return brightness
+    except:
+        return 0.0
 
 def power(state):
     subprocess.run(['cec-client', '-s', '-d', '1'], input=('on 0' if state else 'standby 0').encode(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
