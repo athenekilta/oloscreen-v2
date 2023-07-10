@@ -19,7 +19,7 @@ def get_json(url):
 
 def restaurants():
     today = datetime.now()
-    timestamp = today.strftime("%Y-%m-%d")
+    date = today.strftime("%Y-%m-%d")
     weekday = today.weekday()
 
     restaurant_ids = ','.join(RESTAURANTS.values())
