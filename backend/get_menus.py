@@ -25,12 +25,12 @@ def restaurants():
 
     restaurant_ids = ','.join(RESTAURANTS.values())
     all_menus = get_json(KANTTIINIT_URL.format(restaurant_ids, date))
-
+    all_opening_hours = dict((str(x['id']), x['openingHours']) for x in get_json(KANTTIINIT_OPENING_HOURS.format(restaurant_ids)))
     data = {name: {'menus': [], 'openingHours': {}} for name in RESTAURANTS}
 
     def parse(name, id):
         data[name]['menus'] = all_menus[id].get(today.strftime("%Y-%m-%d"), [])
-        data[name]['openingHours'] =  get_json(KANTTIINIT_OPENING_HOURS.format(id))[0]['openingHours']
+        data[name]['openingHours'] =  all_opening_hours[id]
 
     for name, id in RESTAURANTS.items():
         parse(name, id)
