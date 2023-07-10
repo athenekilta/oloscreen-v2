@@ -38,7 +38,7 @@ def restaurants():
     def filter_foods(restaurant, keyword):
         data[restaurant]['menus'] = [x for x in data[restaurant]['menus'] if not x['title'].startswith(keyword) ]
 
-    filters = {'abloc': ['Wicked', 'Pizza', 'Chef', 'Campus Bread'], 'tuas': ['Jälkiruo', 'Erikoisannos', 'Fresh'] }
+    filters = {'abloc': ['Wicked', 'Pizza', 'Vezza', 'Chef', 'Campus Bread'], 'tuas': ['Jälkiruo', 'Erikoisannos', 'Fresh'] }
 
     for restaurant, keywords in filters.items():
         for keyword in keywords:
