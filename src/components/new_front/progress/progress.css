@@ -1,0 +1,29 @@
+.progress{
+    bottom: 0px;
+    position: absolute;
+    height: 10px;
+    width: 100%;
+    border-radius: 15px;
+}
+.progress .color{
+    position: absolute;
+    background-color: #5e8c64;
+    width: 0px;
+    height: 10px;
+    border-radius: 15px;
+    animation: progres 10s infinite linear;    
+}
+@keyframes progres{
+    0%{
+      width: 0%;
+    }
+    100%{
+        width: 100%;
+    }
+};
+
+@media only screen and (max-width: 700px) {
+    .progress{
+        position: static;
+    }
+}
