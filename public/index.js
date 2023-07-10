@@ -121,8 +121,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       Object.entries(restaurants).forEach(([name, o]) => {
         let container = $(`#${name}`)
         let d = new Date()
-        // Get the opening hours for the current day and update the container
-        container.querySelector('.opening-hours').innerText = o.openingHours[(d.getDay() + 6) % 7] || 'suljettu'
 
         // Group menu items by category
         let categories = {}
@@ -153,6 +151,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           })
         })
         container.querySelector('.menu').innerHTML = html
+
+        // Get the opening hours for the current day and update the container
+        container.querySelector('.opening-hours').innerText = html != '' && o.openingHours[(d.getDay() + 6) % 7] || 'suljettu'
 
       })
     } catch (error) {
