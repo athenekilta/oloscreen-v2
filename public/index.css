@@ -374,3 +374,8 @@ h1 {
   top: 10%;
   left: 0;
 }
+
+.debt_amount {
+  color: #d64933;
+  font-weight: bold;
+}

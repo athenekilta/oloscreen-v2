@@ -5,6 +5,7 @@ import subway
 import os
 import get_menus
 import get_logos
+import get_debts
 from calendar_client import get_future_events, get_next_hype_event
 
 
@@ -43,6 +44,10 @@ def get_json(url):
 @app.route('/restaurants/')
 def restaurants():
     return jsonify(get_menus.restaurants())
+
+@app.route('/debts/')
+def debts():
+    return jsonify(get_debts.debts())
 
 @app.route('/logo-links/')
 def logo_links():

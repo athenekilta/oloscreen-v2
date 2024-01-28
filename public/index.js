@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
 
-  let updateShoutbox = async () => {
+  /* let updateShoutbox = async () => {
     try {
       let shoutbox = await (await fetch('shoutbox/')).json()
       let container = $('#shoutbox > div')
@@ -228,6 +228,27 @@ document.addEventListener('DOMContentLoaded', async () => {
       return new Error('Failed to load shoutbox')
     } finally {
       window.setTimeout(updateShoutbox, 20000)
+    }
+  }
+  */
+
+  let updateDebts = async () => {
+    try {
+      let debts = await (await fetch('debts/')).json()
+      let container = $('#debts > table')
+      container.innerHTML = debts.map((x,i) => {
+        return `<tr class="debt">
+        <td>${i+1}.</td> 
+        <td>${x.username}</td> 
+        <td class="debt_amount">${(x.total_paid/100).toLocaleString("fi-FI",{style: "currency", currency: "EUR"})}</td>
+
+        </tr>`
+      }).join('')
+    } catch (error) {
+      console.error(error)
+      return new Error('Failed to load debts')
+    } finally {
+      window.setTimeout(updateDebts, 20000)
     }
   }
 
@@ -271,7 +292,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load sponsor logos and wait until the images are loaded
     [loadSponsorLogos().then(() => Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; })))).catch(e => e ), 1],
     [updateMenus(), 1],
-    [updateShoutbox(), 1],
+    [updateDebts(), 1],
+   // [updateShoutbox(), 1],
   ].map(([p, pp]) => progressWrapper(progressBar, p, pp)));
   placeholderRandomizer()
   // Load calendar after everything else to reduce load on the server
