@@ -237,9 +237,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       let debts = await (await fetch('debts/')).json()
       let container = $('#debts > table')
       container.innerHTML = debts.map((x,i) => {
+        const name = (x.first_name && x.last_name) ? (x.first_name + " " + x.last_name) : x.username[0].toUpperCase() + x.username.slice(1)
         return `<tr class="debt">
         <td>${i+1}.</td> 
-        <td>${x.username}</td> 
+        <td>${name}</td> 
         <td class="debt_amount">${(x.total_paid/100).toLocaleString("fi-FI",{style: "currency", currency: "EUR"})}</td>
 
         </tr>`
