@@ -160,8 +160,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.error(error)
       return new Error('Failed to load menus')
     } finally {
-      // Update menus every 4 hours and at midnight
-      window.setTimeout(updateMenus, Math.min(midnight(), 4 * 60 * 60 * 1000))
+      // Update menus every 15 minutes and at midnight
+      window.setTimeout(updateMenus, Math.min(midnight(), 15 * 60 * 1000))
     }
   }
 
