@@ -38,12 +38,23 @@ def restaurants():
     def filter_foods(restaurant, keyword):
         data[restaurant]['menus'] = [x for x in data[restaurant]['menus'] if not x['title'].startswith(keyword) ]
 
+    def deduplicate_foods():
+        for restaurant in RESTAURANTS:
+            seen_foods = set()
+            deduped = []
+            for item in data[restaurant]['menus']:
+                if item['title'].strip().lower() not in seen_foods:
+                    deduped.append(item)
+                    seen_foods.add(item['title'].strip().lower())
+            data[restaurant]['menus'] = deduped
+
     filters = {'abloc': ['Wicked', 'Pizza', 'Vezza', 'Chef', 'Campus Bread'], 'tuas': ['Jälkiruo', 'Erikoisannos', 'Fresh'] }
 
     for restaurant, keywords in filters.items():
         for keyword in keywords:
             filter_foods(restaurant, keyword)
 
+    deduplicate_foods()
 
     return data
 
