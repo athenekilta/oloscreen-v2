@@ -231,25 +231,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
   */
-
-  let updateDebts = async () => {
+  
+  let updateBalances = async () => {
     try {
-      let debts = await (await fetch('debts/')).json()
-      let container = $('#debts > table')
-      container.innerHTML = debts.map((x,i) => {
+      let balances = await (await fetch('balances/')).json()
+      let container = $('#balances > table')
+      container.innerHTML = balances.map((x,i) => {
         const name = (x.first_name && x.last_name) ? (x.first_name + " " + x.last_name) : x.username[0].toUpperCase() + x.username.slice(1)
-        return `<tr class="debt">
+        return `<tr class="balance">
         <td>${i+1}.</td> 
-        <td>🤡 ${name} 🤡</td> 
-        <td class="debt_amount">${(x.total_paid/100).toLocaleString("fi-FI",{style: "currency", currency: "EUR"})}</td>
+        <td>👑 ${name} 👑</td> 
+        <td class="balance_amount">${(x.total_paid/100).toLocaleString("fi-FI",{style: "currency", currency: "EUR"})}</td>
 
         </tr>`
       }).join('')
     } catch (error) {
       console.error(error)
-      return new Error('Failed to load debts')
+      return new Error('Failed to load balances')
     } finally {
-      window.setTimeout(updateDebts, 20000)
+      window.setTimeout(updateBalances, 20000)
     }
   }
 
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load sponsor logos and wait until the images are loaded
     [loadSponsorLogos().then(() => Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; })))).catch(e => e ), 1],
     [updateMenus(), 1],
-    [updateDebts(), 1],
+    [updateBalances(), 1],
    // [updateShoutbox(), 1],
   ].map(([p, pp]) => progressWrapper(progressBar, p, pp)));
   placeholderRandomizer()

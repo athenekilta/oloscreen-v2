@@ -375,7 +375,7 @@ h1 {
   left: 0;
 }
 
-.debt_amount {
-  color: #d64933;
+.balance_amount {
+  color: var(--green);
   font-weight: bold;
 }

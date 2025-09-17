@@ -6,6 +6,7 @@ import os
 import get_menus
 import get_logos
 import get_debts
+import get_balances
 from calendar_client import get_future_events, get_next_hype_event
 
 
@@ -48,6 +49,10 @@ def restaurants():
 @app.route('/debts/')
 def debts():
     return jsonify(get_debts.debts())
+
+@app.route('/balances/')
+def balances():
+    return jsonify(get_balances.balances())
 
 @app.route('/logo-links/')
 def logo_links():
