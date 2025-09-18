@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       let balances = await (await fetch('balances/')).json()
       let container = $('#balances > table')
       container.innerHTML = balances.map((x,i) => {
-        const name = (x.first_name && x.last_name) ? (x.first_name + " " + x.last_name) : x.username[0].toUpperCase() + x.username.slice(1)
+        const name = x.alias ? x.alias : ((x.first_name && x.last_name) ? (x.first_name + " " + x.last_name) : x.username)
         return `<tr class="balance">
         <td>${i+1}.</td> 
         <td>👑 ${name} 👑</td> 
