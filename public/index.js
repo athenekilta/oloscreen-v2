@@ -427,7 +427,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           return `<tr class="balance">
         <td>${i + 1}.</td> 
         <td>${trophyImg} ${name} ${trophyImg}</td> 
-        <td class="balance_amount">${(x.total_paid / 100).toLocaleString(
+        <td class="balance_amount">+${(x.total_paid / 100).toLocaleString(
           "fi-FI",
           { style: "currency", currency: "EUR" }
         )}</td>
