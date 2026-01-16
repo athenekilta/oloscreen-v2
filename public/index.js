@@ -57,24 +57,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     return new Date().setHours(24, 0, 0, 0) - new Date();
   };
 
-  // Check if current time is within the first 15 minutes of the hour
-  let isDuckTime = () => {
-    const now = new Date();
-    return now.getMinutes() < 15;
-  };
-
   // Setup duck mode features
   let setupDuckMode = () => {
-    if (!DUCK_MODE || !isDuckTime()) return;
-
-    // Remove existing duck elements if they exist
-    let existingSkip = $("#skip-overlay");
-    let existingDead = $("#dead-ducks");
-    if (existingSkip) existingSkip.remove();
-    if (existingDead) existingDead.remove();
-
-    // Remove existing cooked emojis
-    $$(".cooked-emoji").forEach((el) => el.remove());
+    if (!DUCK_MODE) return;
 
     // Add skip.png overlay on the right side of the screen
     let skipOverlay = document.createElement("img");
@@ -106,26 +91,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       cookedImg.className = "cooked-emoji";
       h2.appendChild(cookedImg);
     });
-  };
-
-  // Remove duck mode features
-  let removeDuckMode = () => {
-    let skipOverlay = $("#skip-overlay");
-    let deadDucks = $("#dead-ducks");
-    if (skipOverlay) skipOverlay.remove();
-    if (deadDucks) deadDucks.remove();
-    $$(".cooked-emoji").forEach((el) => el.remove());
-  };
-
-  // Check duck time status every minute
-  let duckTimeInterval = () => {
-    setInterval(() => {
-      if (isDuckTime()) {
-        if (!$("#skip-overlay")) setupDuckMode();
-      } else {
-        if ($("#skip-overlay")) removeDuckMode();
-      }
-    }, 60000); // Check every minute
   };
 
   let loadSponsorLogos = async () => {
@@ -458,7 +423,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const progressBar = ProgressBar.call(new EventTarget(), 3.2);
 
   setupDuckMode();
-  duckTimeInterval();
   timeAndDate();
   window.setInterval(timeAndDate, 1000);
   await Promise.all(
