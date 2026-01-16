@@ -6,14 +6,18 @@ html {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  font-size: max(16px, min(1.53vw, 2.72vh)); /* 1.53vw = 2.72vh = 29.376px at 1920 * 1080 px */
+  font-size: max(
+    16px,
+    min(1.53vw, 2.72vh)
+  ); /* 1.53vw = 2.72vh = 29.376px at 1920 * 1080 px */
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background);
@@ -32,25 +36,25 @@ header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: .5em 2em;
+  gap: 0.5em 2em;
   width: 100%;
   height: 5em;
 }
 
 header #time {
   font-size: 2.5rem;
-  margin-left: .5em;
+  margin-left: 0.5em;
 }
 
 header #calendar {
   font-size: 1rem;
 }
 
-header #calendar>div> :last-child {
+header #calendar > div > :last-child {
   font-weight: 700;
 }
 
-header>div {
+header > div {
   flex-shrink: 0;
 }
 
@@ -66,7 +70,6 @@ header>div {
   transition: opacity 1s ease-in-out;
 }
 
-
 #logos img {
   position: absolute;
   top: 0;
@@ -74,6 +77,13 @@ header>div {
   height: 100%;
   width: 6rem;
   object-fit: contain;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+#logos.duck-mode img {
+  right: auto;
+  left: 0;
 }
 
 @media screen and (max-width: 599px) {
@@ -81,7 +91,7 @@ header>div {
     flex-wrap: wrap;
     justify-content: center;
     height: auto;
-    padding: .5rem 0;
+    padding: 0.5rem 0;
   }
 
   header #time {
@@ -126,7 +136,6 @@ section > * {
 }
 
 @media screen and ((max-width: 699px) or (max-height: 599px)) {
-
   #restaurants,
   #others {
     grid-template-columns: 1fr;
@@ -156,17 +165,16 @@ section > * {
   }
 }
 
-
 main > section > div {
   height: 100%;
   overflow: hidden;
   position: relative;
-  padding-right: .5rem;
+  padding-right: 0.5rem;
 }
 
 main > section > div > * {
   border-left: solid 0.1rem var(--green);
-  padding-left: .5rem;
+  padding-left: 0.5rem;
 }
 
 h2 {
@@ -178,30 +186,30 @@ h2 {
 
 h3 {
   font-weight: 400;
-  font-size: .8em;
+  font-size: 0.8em;
   text-transform: uppercase;
   margin: 0;
-  margin-top: .75rem;
+  margin-top: 0.75rem;
 }
 
 .opening-hours {
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
 }
 
 .opening-hours,
 .event .meta {
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 300;
 }
 
 p {
-  margin: .5em 0;
+  margin: 0.5em 0;
   font-weight: 300;
 }
 
 .properties {
   display: inline-block;
-  font-size: .8em;
+  font-size: 0.8em;
   color: var(--green);
   font-weight: 600;
 }
@@ -211,17 +219,16 @@ p {
 }
 
 .event {
-  margin: .5em 0;
+  margin: 0.5em 0;
 }
 
 .event:last-of-type,
-.menu> :last-child,
-#shoutbox>div> :last-child {
+.menu > :last-child,
+#shoutbox > div > :last-child {
   margin-bottom: 0;
 }
 
-
-.menu> :first-child {
+.menu > :first-child {
   margin-top: 0;
 }
 
@@ -246,7 +253,7 @@ p {
 }
 
 .event .description {
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 300;
   margin: 0;
 }
@@ -279,7 +286,6 @@ p {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  
 }
 
 h1 {
@@ -322,7 +328,6 @@ svg#title {
   margin-top: 2rem;
 }
 
-
 h1 {
   margin-top: 2rem;
   text-transform: uppercase;
@@ -336,24 +341,23 @@ h1 {
   left: 0;
   z-index: 101;
   width: 100%;
-  height: .3rem;
+  height: 0.3rem;
   font-size: 0.75rem;
   background: #fff;
   clip-path: inset(0 calc(100% - var(--n)) 0 0);
-  transition: clip-path 10s cubic-bezier(.19,1,.22,1);
+  transition: clip-path 10s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 #error {
   padding: 2em;
 }
 
-
-@keyframes placeHolderShimmer{
-  0%{
-      background-position: -468px 0
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
   }
-  100%{
-      background-position: 468px 0
+  100% {
+    background-position: 468px 0;
   }
 }
 
@@ -378,4 +382,69 @@ h1 {
 .balance_amount {
   color: var(--green);
   font-weight: bold;
+}
+
+/* Duck mode styles */
+#skip-overlay {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10vw;
+  height: auto;
+  z-index: 50;
+  pointer-events: none;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+#dead-ducks {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-65%);
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  padding: 0.5rem;
+  z-index: 50;
+  pointer-events: none;
+}
+
+#dead-ducks img {
+  height: 1.5rem;
+  width: auto;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+.mystery-image {
+  height: 2.3rem !important;
+  width: auto;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+.trophy-emoji {
+  height: 1em;
+  width: auto;
+  vertical-align: middle;
+  margin: 0 0.1em;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+.cooked-emoji {
+  height: 1em;
+  width: auto;
+  vertical-align: middle;
+  margin-left: 0.3em;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+/* In duck mode, position ducks from left instead of right */
+body.duck-mode #logos img {
+  left: 0;
+  right: auto;
 }
