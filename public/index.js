@@ -31,8 +31,8 @@ Date.prototype.getWeekYear = function () {
 let $ = document.querySelector.bind(document);
 let $$ = document.querySelectorAll.bind(document);
 
-// Toggle for fun duck mode - set to true to enable all duck features
-const DUCK_MODE = true;
+// Toggle for fun duck mode - dynamically controlled by timer
+let DUCK_MODE = false;
 
 // Duck colors available
 const DUCK_COLORS = [
@@ -57,10 +57,53 @@ document.addEventListener("DOMContentLoaded", async () => {
     return new Date().setHours(24, 0, 0, 0) - new Date();
   };
 
-  // Setup duck mode features
-  let setupDuckMode = () => {
-    if (!DUCK_MODE) return;
+  // Duck mode timer: 1 minute on, 9 minutes off
+  let toggleDuckMode = (enable) => {
+    DUCK_MODE = enable;
 
+    // Toggle visibility of duck elements
+    const skipOverlay = $("#skip-overlay");
+    const deadDucks = $("#dead-ducks");
+    const cookedEmojis = $$(".cooked-emoji");
+    const logosContainer = $("#logos");
+    const ducksContainer = $("#ducks");
+
+    if (skipOverlay) skipOverlay.style.display = enable ? "block" : "none";
+    if (deadDucks) deadDucks.style.display = enable ? "flex" : "none";
+    cookedEmojis.forEach(
+      (img) => (img.style.display = enable ? "inline" : "none")
+    );
+
+    // Toggle visibility between logos and ducks containers
+    if (logosContainer && ducksContainer) {
+      if (enable) {
+        logosContainer.classList.add("hidden");
+        ducksContainer.classList.remove("hidden");
+      } else {
+        logosContainer.classList.remove("hidden");
+        ducksContainer.classList.add("hidden");
+      }
+    }
+
+    // Trigger balances update to switch between trophy images and crown emojis
+    updateBalances();
+  };
+
+  let startDuckModeTimer = () => {
+    // Start with duck mode off
+    toggleDuckMode(false);
+
+    // Turn on duck mode for 1 minute every 10 minutes
+    setInterval(() => {
+      toggleDuckMode(true);
+      setTimeout(() => {
+        toggleDuckMode(false);
+      }, 60 * 1000); // 1 minute
+    }, 10 * 60 * 1000); // 10 minutes
+  };
+
+  // Setup duck mode features (always create elements, control visibility via timer)
+  let setupDuckMode = () => {
     // Add skip.png overlay on the right side of the screen
     let skipOverlay = document.createElement("img");
     skipOverlay.src = "ducks/skip.png";
@@ -94,52 +137,66 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   let loadSponsorLogos = async () => {
-    let container = $("#logos");
+    let logosContainer = $("#logos");
+    let ducksContainer = $("#ducks");
+    let mainContainer = $("#logos-container");
 
-    if (DUCK_MODE) {
-      // Add duck-mode class for CSS positioning
-      container.classList.add("duck-mode");
-      // Load duck images instead of sponsor logos
-      DUCK_COLORS.forEach((color) => {
-        let img = document.createElement("img");
-        img.src = `ducks/duck-${color}.png`;
-        container.appendChild(img);
-      });
-    } else {
-      // Fetch logos from API
-      let links = await (await fetch("logo-links/")).json();
-      links.forEach((x) => {
-        let img = document.createElement("img");
-        img.src = x;
-        container.appendChild(img);
-      });
-    }
+    // Load sponsor logos
+    let links = await (await fetch("logo-links/")).json();
+    links.forEach((x) => {
+      let img = document.createElement("img");
+      img.src = x;
+      logosContainer.appendChild(img);
+    });
+
+    // Load duck images
+    DUCK_COLORS.forEach((color) => {
+      let img = document.createElement("img");
+      img.src = `ducks/duck-${color}.png`;
+      ducksContainer.appendChild(img);
+    });
 
     let logos = $$("#logos img");
+    let ducks = $$("#ducks img");
 
-    // Scroll logos/ducks
-    let animation = (ms) => {
-      let containerSize = container.offsetWidth;
+    // Separate animation for logos (right to left)
+    let animateLogos = (ms) => {
+      let containerSize = mainContainer.offsetWidth;
       logos.forEach((x, i) => {
         let elementWidth = x.offsetWidth * 1.25;
-        // In duck mode, scroll left to right (reverse direction)
-        let position = DUCK_MODE
-          ? ((ms * 0.0005 * elementWidth + i * elementWidth) %
-              (elementWidth * logos.length)) -
-            elementWidth
-          : ((ms * 0.0005 * elementWidth + (logos.length - i) * elementWidth) %
-              (elementWidth * logos.length)) -
-            elementWidth;
+        let position =
+          ((ms * 0.0005 * elementWidth + (logos.length - i) * elementWidth) %
+            (elementWidth * logos.length)) -
+          elementWidth;
         if (position < containerSize) {
           if (x.style.visibility === "hidden") x.style.visibility = "visible";
-          // Translate3d is hardware accelerated
-          // In duck mode, position from left edge; otherwise from right
-          x.style.transform = DUCK_MODE
-            ? `translate3d(${position}px,0,0)`
-            : `translate3d(${-position}px,0,0)`;
+          x.style.transform = `translate3d(${-position}px,0,0)`;
         } else if (x.style.visibility !== "hidden")
           x.style.visibility = "hidden";
       });
+    };
+
+    // Separate animation for ducks (left to right)
+    let animateDucks = (ms) => {
+      let containerSize = mainContainer.offsetWidth;
+      ducks.forEach((x, i) => {
+        let elementWidth = x.offsetWidth * 1.25;
+        let position =
+          ((ms * 0.0005 * elementWidth + i * elementWidth) %
+            (elementWidth * ducks.length)) -
+          elementWidth;
+        if (position < containerSize) {
+          if (x.style.visibility === "hidden") x.style.visibility = "visible";
+          x.style.transform = `translate3d(${position}px,0,0)`;
+        } else if (x.style.visibility !== "hidden")
+          x.style.visibility = "hidden";
+      });
+    };
+
+    // Combined animation loop
+    let animation = (ms) => {
+      animateLogos(ms);
+      animateDucks(ms);
 
       // Scroll elements with class "scrolling"
       let scrollingElements = $$(".scrolling");
@@ -423,6 +480,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const progressBar = ProgressBar.call(new EventTarget(), 3.2);
 
   setupDuckMode();
+  startDuckModeTimer();
   timeAndDate();
   window.setInterval(timeAndDate, 1000);
   await Promise.all(

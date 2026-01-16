@@ -58,7 +58,7 @@ header > div {
   flex-shrink: 0;
 }
 
-#logos {
+#logos-container {
   overflow: hidden;
   flex-grow: 1;
   height: 3rem;
@@ -66,14 +66,23 @@ header > div {
   position: relative;
 }
 
-#logos.fade-in {
-  transition: opacity 1s ease-in-out;
+.logo-scroller {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transition: opacity 3s ease-in-out;
 }
 
-#logos img {
+.logo-scroller.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logo-scroller img {
   position: absolute;
   top: 0;
-  right: 0;
   height: 100%;
   width: 6rem;
   object-fit: contain;
@@ -81,8 +90,13 @@ header > div {
   -ms-interpolation-mode: nearest-neighbor;
 }
 
-#logos.duck-mode img {
-  right: auto;
+/* Sponsor logos scroll from right */
+#logos img {
+  right: 0;
+}
+
+/* Duck images scroll from left */
+#ducks img {
   left: 0;
 }
 
