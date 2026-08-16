@@ -136,6 +136,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   };
 
+  let kissaEnabled = false
+
+  let updateKissaMode = async () => {
+    try {
+      let response = await fetch('/api/kissa', { cache: 'no-store' })
+      if (!response.ok) throw new Error(`Kissa state request failed: ${response.status}`)
+
+      let state = await response.json()
+      let overlay = $('#kissa-overlay')
+      let video = $('#kissa-video')
+
+      if (state.enabled) {
+        overlay.hidden = false
+        if (!kissaEnabled) video.currentTime = 0
+        if (video.paused) await video.play()
+      } else {
+        video.pause()
+        video.currentTime = 0
+        overlay.hidden = true
+      }
+
+      kissaEnabled = state.enabled
+    } catch (error) {
+      console.error('Could not update kissa mode', error)
+    } finally {
+      window.setTimeout(updateKissaMode, 1000)
+    }
+  }
+
+  updateKissaMode()
+
   let loadSponsorLogos = async () => {
     let logosContainer = $("#logos");
     let ducksContainer = $("#ducks");

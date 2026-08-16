@@ -11,6 +11,7 @@ cd oloscreen-v2/
 You must place a `.env` file in the root directory. Its contents should be something like this:
 ```bash
 OLOSCREEN_TELEGRAM_TOKEN=your_telegram_bot_token
+OLOSCREEN_KISSA_TOKEN=a_long_random_secret
 ```
 
 ### Using docker

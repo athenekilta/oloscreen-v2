@@ -11,6 +11,5 @@ services:
       dockerfile: Dockerfile
     volumes:
       - '.:/app'
-      - '/app/backend'
     ports:
       - 3000:3000
