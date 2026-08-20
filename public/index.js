@@ -149,6 +149,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (state.enabled) {
         overlay.hidden = false
+        video.muted = true
         if (!kissaEnabled) video.currentTime = 0
         if (video.paused) await video.play()
       } else {
