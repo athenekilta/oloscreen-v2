@@ -85,8 +85,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
-    // Trigger balances update to switch between trophy images and crown emojis
-    updateBalances();
+    // Re-render cached balances to switch between trophy images and crown emojis
+    if (balances.length > 0) renderBalances();
   };
 
   let startDuckModeTimer = () => {
@@ -427,21 +427,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   */
 
-  let updateBalances = async () => {
-    try {
-      let balances = await (await fetch("balances/")).json();
-      let container = $("#balances > table");
-      const trophyImg = DUCK_MODE
-        ? '<img src="ducks/trophy.png" class="trophy-emoji">'
-        : "👑";
-      container.innerHTML = balances
-        .map((x, i) => {
-          const name = x.alias
-            ? x.alias
-            : x.first_name && x.last_name
-            ? x.first_name + " " + x.last_name
-            : x.username;
-          return `<tr class="balance">
+  let balances = [];
+
+  let renderBalances = () => {
+    let container = $("#balances > table");
+    const trophyImg = DUCK_MODE
+      ? '<img src="ducks/trophy.png" class="trophy-emoji">'
+      : "👑";
+    container.innerHTML = balances
+      .map((x, i) => {
+        const name = x.alias
+          ? x.alias
+          : x.first_name && x.last_name
+          ? x.first_name + " " + x.last_name
+          : x.username;
+        return `<tr class="balance">
         <td>${i + 1}.</td> 
         <td>${trophyImg} ${name} ${trophyImg}</td> 
         <td class="balance_amount">+${(x.total_paid / 100).toLocaleString(
@@ -450,8 +450,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         )}</td>
 
         </tr>`;
-        })
-        .join("");
+      })
+      .join("");
+  };
+
+  let updateBalances = async () => {
+    try {
+      balances = await (await fetch("balances/")).json();
+      renderBalances();
     } catch (error) {
       console.error(error);
       return new Error("Failed to load balances");

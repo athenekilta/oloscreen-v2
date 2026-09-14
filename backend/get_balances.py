@@ -3,7 +3,7 @@ from pprint import pprint
 import requests
 
 
-NAMUBUFFA_URL = 'https://namubufferi.fi/api/balances'
+NAMUBUFFA_URL = 'https://namubufferi.fi/api/balances/'
 
 
 def get_json(url):

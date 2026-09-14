@@ -1,6 +1,7 @@
 import os
 import secrets
 from threading import Lock
+from time import monotonic
 
 import requests
 from flask import Flask, jsonify, request, send_from_directory
@@ -20,6 +21,24 @@ kissa_state = {'enabled': False}
 kissa_state_lock = Lock()
 reload_requested = False
 reload_requested_lock = Lock()
+upstream_cache = {}
+upstream_cache_locks = {
+    'balances': Lock(),
+    'debts': Lock(),
+}
+UPSTREAM_CACHE_TTL_SECONDS = 20
+
+
+def get_cached_upstream_data(key, loader):
+    with upstream_cache_locks[key]:
+        cached = upstream_cache.get(key)
+        now = monotonic()
+        if cached is not None and now - cached['fetched_at'] < UPSTREAM_CACHE_TTL_SECONDS:
+            return cached['data']
+
+        data = loader()
+        upstream_cache[key] = {'data': data, 'fetched_at': monotonic()}
+        return data
 
 
 def control_auth_error():
@@ -108,7 +127,7 @@ def restaurants():
 
 @app.route('/debts/')
 def debts():
-    return jsonify(get_debts.debts())
+    return jsonify(get_cached_upstream_data('debts', get_debts.debts))
 
 @app.route('/balances/')
 def balances():
@@ -117,7 +136,10 @@ def balances():
         reload = reload_requested
         reload_requested = False
 
-    return jsonify(get_balances.balances(reload=reload))
+    if reload:
+        return jsonify(get_balances.balances(reload=True))
+
+    return jsonify(get_cached_upstream_data('balances', get_balances.balances))
 
 @app.route('/logo-links/')
 def logo_links():
